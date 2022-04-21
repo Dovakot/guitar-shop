@@ -33,7 +33,7 @@ const guitarData = createReducer(initialState, (builder) => {
     })
     .addCase(resetMainPageData, (state) => {
       state.guitars = GUITARS_DATA_DEFAULT;
-    })
+    });
 });
 
 export default guitarData;

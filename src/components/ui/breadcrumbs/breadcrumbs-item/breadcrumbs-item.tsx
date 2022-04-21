@@ -3,8 +3,8 @@ import {Link, useLocation} from 'react-router-dom';
 import cn from 'classnames';
 
 type readcrumbsItemProps = {
-  name: string;
-  link: string;
+  name: string,
+  link: string,
 };
 
 function BreadcrumbsItem({name, link}: readcrumbsItemProps): JSX.Element {

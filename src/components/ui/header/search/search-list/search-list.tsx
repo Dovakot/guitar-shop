@@ -2,16 +2,28 @@ import React from 'react';
 
 import './search-list.css';
 
+import {Guitars} from '../../../../../types/guitar-types';
+
 import SearchItem from './search-item/search-item';
 
-const getSearchItem = ({id, name}: any) => (
+type SearchItemProps = {
+  id: number,
+  name: string,
+};
+
+type GuitarProps = {
+  guitars: Guitars,
+};
+
+const getSearchItem = ({id, name}: SearchItemProps) => (
   <SearchItem
     key={name}
     id={id}
-    name={name} />
+    name={name}
+  />
 );
 
-function SearchList({guitars}: any): JSX.Element {
+function SearchList({guitars}: GuitarProps): JSX.Element {
   return (
     <ul className="form-search__select-list">
       {guitars.map(getSearchItem)}

@@ -2,9 +2,9 @@ import React from 'react';
 
 type SvgIconProps = {
   icon: {
-    id: string;
-    width: number;
-    height: number;
+    id: string,
+    width: number,
+    height: number,
   },
   className?: string,
 };

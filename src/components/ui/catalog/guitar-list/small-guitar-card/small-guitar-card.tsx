@@ -1,17 +1,9 @@
 import React from 'react';
 
 import {formatPrice} from '../../../../../utils/utils';
+import {GuitarCard} from '../../../../../types/guitar-types';
 
 import Rating from '../../../rating/rating';
-
-type SmallGuitarCardProps = {
-  id: number;
-  name: string;
-  previewImg: string;
-  stringCount: number;
-  rating: number;
-  price: number;
-};
 
 function SmallGuitarCard({
   id,
@@ -20,7 +12,7 @@ function SmallGuitarCard({
   stringCount,
   rating,
   price,
-}: SmallGuitarCardProps): JSX.Element {
+}: GuitarCard): JSX.Element {
   const formattedPrice = formatPrice(price);
 
   return (

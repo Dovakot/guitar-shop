@@ -1,17 +1,11 @@
 import React from 'react';
 
+import {Page} from '../../../types/types';
+
 import TextStub from '../../ui/text-stub/text-stub';
 import Breadcrumbs from '../../ui/breadcrumbs/breadcrumbs';
 
-type ContentWrapperProps = {
-  children?: React.ReactNode;
-  title: string;
-  isBreadcrumbs?: boolean;
-};
-
-function ContentWrapper(
-  {children, title, isBreadcrumbs}: ContentWrapperProps,
-): JSX.Element {
+function ContentWrapper({children, title, isBreadcrumbs}: Page): JSX.Element {
   return (
     <main className="page-content">
       <div className="container">

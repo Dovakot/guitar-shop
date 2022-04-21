@@ -1,20 +1,7 @@
-import {Dispatch, SetStateAction} from 'react';
-import {ThunkAction} from 'redux-thunk';
-import {Action} from 'redux';
-import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
 
-import {rootReducer} from '../reducers/root-reducer';
+import {ThunkActionResult} from '../../types/store-types';
 import {loadGuitars, searchGuitars} from '../actions/actions';
-
-type State = ReturnType<typeof rootReducer>;
-
-type ThunkActionResult<R = Promise<void>> = ThunkAction<
-  R,
-  State,
-  AxiosInstance,
-  Action
->
 
 const fetchGuitars = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {

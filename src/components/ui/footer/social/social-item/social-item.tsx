@@ -3,8 +3,8 @@ import React from 'react';
 import SvgIcon from '../../../svg-icon/svg-icon';
 
 type SocialItemProps = {
-  label: string;
-  currentLink: string;
+  label: string,
+  currentLink: string,
 };
 
 function SocialItem({label, currentLink}: SocialItemProps): JSX.Element {

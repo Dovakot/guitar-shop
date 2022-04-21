@@ -7,7 +7,7 @@ import './logo.css';
 import {AppRoute} from '../../../const';
 
 type LogoProps = {
-  className?: string;
+  className?: string,
 };
 
 function Logo({className}: LogoProps) {

@@ -4,9 +4,9 @@ import cn from 'classnames';
 import SvgIcon from '../svg-icon/svg-icon';
 
 type RatingProps = {
-  rating: number;
-  comments: number;
-  className: string;
+  rating: number,
+  comments: number,
+  className: string,
 };
 
 const MAX_STAR_COUNT = 5;

@@ -6,20 +6,19 @@ enum ActionType {
   SearchGuitars = 'guitar/searchGuitars',
 }
 
-const loadData = (data: [], isError: boolean) => ({
+const loadGuitars = createAction(ActionType.LoadGuitars, (data = [], isError) => ({
   payload: {
     data,
     isLoading: isError,
     isError,
   },
-});
+}));
 
-const loadGuitars = createAction(ActionType.LoadGuitars, loadData);
-const resetMainPageData = createAction(ActionType.ResetMainPageData);
-
-const searchGuitars =  createAction(ActionType.SearchGuitars, (data = []) => ({
+const searchGuitars = createAction(ActionType.SearchGuitars, (data = []) => ({
   payload: data,
 }));
+
+const resetMainPageData = createAction(ActionType.ResetMainPageData);
 
 export {
   ActionType,

@@ -1,21 +1,12 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
+import {GuitarCard} from '../../../../types/guitar-types';
 import {getGuitars} from '../../../../store/reducers/guitar-data/selectors';
 
 import SmallGuitarCard from './small-guitar-card/small-guitar-card';
 
-type GuitarCardProps = {
-  id: number;
-  name: string;
-  type: string;
-  previewImg: string;
-  stringCount: number;
-  rating: number;
-  price: number;
-};
-
-const getSmallGuitarCard = (guitar: GuitarCardProps) => (
+const getSmallGuitarCard = (guitar: GuitarCard) => (
   <SmallGuitarCard
     key={guitar.id}
     {...guitar}

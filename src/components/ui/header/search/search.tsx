@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {ChangeEvent, FocusEvent, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {debouncedFetchData} from '../../../../utils/utils';
@@ -16,7 +16,7 @@ function Search(): JSX.Element {
   const dispatch = useDispatch();
   const [fieldValue, setFieldValue] = useState('');
 
-  const handleFormChange = ({target}: any) => {
+  const handleFormChange = ({target}: ChangeEvent<HTMLFormElement>) => {
     const {value} = target;
     const truncValue = value.trim();
 
@@ -24,13 +24,13 @@ function Search(): JSX.Element {
     debouncedFetchData(dispatch, fetchFoundGuitars, searchGuitars, truncValue);
   };
 
-  const handleSearchBlur = (evt: any) => !evt.currentTarget.contains(evt.relatedTarget)
-    && dispatch(searchGuitars());
+  const handleSearchBlur = ({currentTarget, relatedTarget}: FocusEvent<Element | Node>) => !currentTarget
+    .contains(relatedTarget) && dispatch(searchGuitars());
 
   useEffect(() => () => {
     dispatch(searchGuitars());
     setFieldValue('');
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="form-search" onBlur={handleSearchBlur}>

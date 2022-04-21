@@ -3,8 +3,8 @@ import React from 'react';
 import SocialItem from './social-item/social-item';
 
 type SocialItemProps = {
-  name: string;
-  path: string;
+  name: string,
+  path: string,
 };
 
 const socialList = [

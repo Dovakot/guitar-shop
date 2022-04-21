@@ -5,8 +5,8 @@ import {AppRoute, NavLinkTitle} from '../../../const';
 import BreadcrumbsItem from './breadcrumbs-item/breadcrumbs-item';
 
 type BreadcrumbsProps = {
-  name?: string;
-  currentLink?: string;
+  name?: string,
+  currentLink?: string,
 };
 
 function Breadcrumbs({name, currentLink}: BreadcrumbsProps): JSX.Element {

@@ -5,8 +5,8 @@ import {AppRoute, NavLinkTitle} from '../../../../const';
 import NavItem from './nav-item/nav-item';
 
 type NavItemProps = {
-  name: string;
-  route: string;
+  name: string,
+  route: string,
 };
 
 const navList = [

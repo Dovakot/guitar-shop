@@ -1,6 +1,10 @@
 import React from 'react';
 
-function SearchField({fieldValue}: any): JSX.Element {
+type SearchFieldProps = {
+  fieldValue: string,
+};
+
+function SearchField({fieldValue}: SearchFieldProps): JSX.Element {
   return (
     <>
       <input

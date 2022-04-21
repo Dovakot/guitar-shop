@@ -4,8 +4,8 @@ import {Link, generatePath} from 'react-router-dom';
 import {AppRoute} from '../../../../../../const';
 
 type SearchItemProps = {
-  id: number;
-  name: string;
+  id: number,
+  name: string,
 };
 
 function SearchItem({id, name}: SearchItemProps): JSX.Element {

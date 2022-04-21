@@ -2,8 +2,8 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 
 type NavItemProps = {
-  name: string;
-  currentLink: string;
+  name: string,
+  currentLink: string,
 };
 
 function NavItem({name, currentLink}: NavItemProps): JSX.Element {

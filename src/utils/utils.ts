@@ -1,13 +1,16 @@
+import {Dispatch} from 'react';
 import {debounce} from 'ts-debounce';
+
+import {ThunkActionResult} from '../types/store-types';
 
 const WAIT_1000_MILLISECONDS = 1000;
 
 const fetchData = (
-  dispatch: any,
-  fetchData: any,
-  resetData: any,
-  value?: string
-) => value ? dispatch(fetchData(value)) : dispatch(resetData());
+  dispatch: Dispatch<ThunkActionResult | void>,
+  getData: (name: string) => ThunkActionResult,
+  resetData: () => void,
+  value?: string,
+) => value ? dispatch(getData(value)) : dispatch(resetData());
 
 const debouncedFetchData = debounce(fetchData, WAIT_1000_MILLISECONDS);
 
