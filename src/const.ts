@@ -1,3 +1,5 @@
+const WAIT_1000_MILLISECONDS = 1000;
+
 enum AppRoute {
   Root = '/',
   Catalog = '/catalog/:page',
@@ -25,6 +27,7 @@ enum NavLinkTitle {
 }
 
 export {
+  WAIT_1000_MILLISECONDS,
   AppRoute,
   NavLinkTitle
 };

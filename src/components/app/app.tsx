@@ -23,7 +23,7 @@ function App(): JSX.Element {
           </Route>
 
           <Route path={AppRoute.Guitar} exact>
-            <BasePage title="Гитара" />
+            <BasePage title="Ваша гитара" />
           </Route>
 
           <Route path={AppRoute.Cart} exact>

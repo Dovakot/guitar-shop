@@ -1,10 +1,11 @@
+import {Dispatch, SetStateAction} from 'react';
 import {ThunkAction} from 'redux-thunk';
 import {Action} from 'redux';
 import {AxiosInstance} from 'axios';
 import {toast} from 'react-toastify';
 
 import {rootReducer} from '../reducers/root-reducer';
-import {loadGuitars} from '../actions/actions';
+import {loadGuitars, searchGuitars} from '../actions/actions';
 
 type State = ReturnType<typeof rootReducer>;
 
@@ -26,6 +27,18 @@ const fetchGuitars = (): ThunkActionResult =>
     }
   };
 
+const fetchFoundGuitars = (name: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.get(`/guitars?name_like=${name}`);
+
+      dispatch(searchGuitars(data));
+    } catch {
+      toast.error('Ошибка при загрузке данных');
+    }
+  };
+
 export {
-  fetchGuitars
+  fetchGuitars,
+  fetchFoundGuitars
 };
