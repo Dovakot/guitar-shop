@@ -2,6 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 
 import {rootReducer} from './reducers/root-reducer';
 import createApi from '../services/api';
+import redirect from './middlewares/redirect';
 
 const api = createApi();
 
@@ -13,7 +14,7 @@ const store = configureStore({
         extraArgument: api,
       },
       serializableCheck: false,
-    }),
+    }).concat(redirect),
 });
 
 export default store;

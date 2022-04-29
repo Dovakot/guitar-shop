@@ -12,21 +12,25 @@ type RatingProps = {
 const MAX_STAR_COUNT = 5;
 const allStars = [...Array(MAX_STAR_COUNT)];
 
-const getIconOption = (type: string) => ({
-  id: `icon${type}star`,
-  width: 12,
-  height: 11,
-});
+const getIconConfig = (index: number, rating: number) => {
+  const starCount = Math.trunc(rating);
+  const type = index < starCount ? '-full-' : '-';
+
+  return {
+    id: `icon${type}star`,
+    width: 12,
+    height: 11,
+  };
+};
 
 function Rating({rating, comments, className}: RatingProps): JSX.Element {
   const rateClass = cn('rate', {
     [className]: true,
   });
-  const starCount = Math.trunc(rating);
 
   const getStar = (star: undefined, index: number) => {
     const key = `star-${index}`;
-    const iconOption = getIconOption(index < starCount ? '-full-' : '-');
+    const iconOption = getIconConfig(index, rating);
 
     return <SvgIcon key={key} icon={iconOption} />;
   };

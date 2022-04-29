@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {fetchGuitars} from '../../../store/api-actions/api-actions';
 import {resetMainPageData} from '../../../store/actions/actions';
-import {getGuitars} from '../../../store/reducers/guitar-data/selectors';
+import {getStatusIsLoading} from '../../../store/reducers/guitar-data/selectors';
 
 import BasePage from '../../base-page/base-page';
 import Catalog from '../../ui/catalog/catalog';
-import Loading from '../../ui/loading/loading';
+import LoadingCatalog from '../../ui/loading-catalog/loading-catalog';
 
 type MainProps = {
   isBreadcrumbs?: boolean;
@@ -15,14 +14,10 @@ type MainProps = {
 
 function Main({isBreadcrumbs}: MainProps): JSX.Element {
   const dispatch = useDispatch();
-  const {isLoading, isError} = useSelector(getGuitars);
+  const {isLoading, isError} = useSelector(getStatusIsLoading);
 
   useEffect(() => {
-    const resetPageData = async () => {
-      await dispatch(resetMainPageData());
-    };
-
-    dispatch(fetchGuitars());
+    const resetPageData = async () => await dispatch(resetMainPageData());
 
     return () => {
       resetPageData();
@@ -32,7 +27,7 @@ function Main({isBreadcrumbs}: MainProps): JSX.Element {
   return (
     <BasePage title="Каталог гитар" isBreadcrumbs>
       {isLoading
-        ? <Loading isError={isError} />
+        ? <LoadingCatalog isError={isError} />
         : <Catalog />}
     </BasePage>
   );

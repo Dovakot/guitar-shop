@@ -4,6 +4,11 @@ type Page = {
   isBreadcrumbs?: boolean,
 };
 
+type GeneratedParams = {
+  [key: string]: string[];
+};
+
 export type {
-  Page
+  Page,
+  GeneratedParams
 };

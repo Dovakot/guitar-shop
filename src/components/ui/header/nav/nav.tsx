@@ -12,7 +12,7 @@ type NavItemProps = {
 const navList = [
   {
     name: NavLinkTitle.Catalog,
-    route: AppRoute.Root,
+    route: AppRoute.Catalog,
   },
   {
     name: NavLinkTitle.Stores,

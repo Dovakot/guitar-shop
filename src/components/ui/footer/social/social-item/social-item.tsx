@@ -7,12 +7,14 @@ type SocialItemProps = {
   currentLink: string,
 };
 
+const getIconConfig = (label: string) => ({
+  id: `icon-${label}`,
+  width: 24,
+  height: 24,
+});
+
 function SocialItem({label, currentLink}: SocialItemProps): JSX.Element {
-  const iconOptions = {
-    id: `icon-${label}`,
-    width: 24,
-    height: 24,
-  };
+  const iconConfig = getIconConfig(label);
 
   return (
     <li className="socials-item">
@@ -23,7 +25,7 @@ function SocialItem({label, currentLink}: SocialItemProps): JSX.Element {
         target="_blank"
         rel="noreferrer"
       >
-        <SvgIcon className="socials__icon" icon={iconOptions} />
+        <SvgIcon className="socials__icon" icon={iconConfig} />
       </a>
     </li>
   );

@@ -1,0 +1,7 @@
+.catalog-sort__type-button:not(:hover):not(.catalog-sort__type-button--active) {
+  color: #585757;
+}
+
+.catalog-sort__order-button--up:hover {
+  border-bottom-color: #c90606;
+}

@@ -1,9 +1,10 @@
 import React from 'react';
-import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect, Router as BrowserRouter} from 'react-router-dom';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import {AppRoute, NavLinkTitle} from '../../const';
+import {AppRoute, NavLinkTitle, DEFAULT_PAGE_PATH} from '../../const';
+import browserHistory from '../../browser-history';
 
 import BasePage from '../base-page/base-page';
 import Main from '../pages/main/main';
@@ -12,10 +13,10 @@ import NotFound from '../pages/not-found/not-found';
 function App(): JSX.Element {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter history={browserHistory}>
         <Switch>
           <Route path={AppRoute.Root} exact>
-            <Main isBreadcrumbs />
+            <Redirect to={DEFAULT_PAGE_PATH} />
           </Route>
 
           <Route path={AppRoute.Catalog} exact>

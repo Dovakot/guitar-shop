@@ -9,17 +9,15 @@ type readcrumbsItemProps = {
 
 function BreadcrumbsItem({name, link}: readcrumbsItemProps): JSX.Element {
   const {pathname} = useLocation();
-  const isCurrent = pathname === link;
-
   const linkClass = cn('link', {
-    'link--current': isCurrent,
+    'link--current': pathname === link,
   });
 
   return (
     <li className="breadcrumbs__item">
-      {isCurrent
-        ? <span className={linkClass}>{name}</span>
-        : <Link className={linkClass} to={link}>{name}</Link>}
+      <Link className={linkClass} to={link}>
+        {name}
+      </Link>
     </li>
   );
 }

@@ -1,8 +1,7 @@
 import React, {ChangeEvent, FocusEvent, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {debouncedFetchData} from '../../../../utils/utils';
-
+import {debouncedFindGuitars} from '../../../../utils/utils';
 import {getFoundGuitars} from '../../../../store/reducers/guitar-data/selectors';
 import {searchGuitars} from '../../../../store/actions/actions';
 import {fetchFoundGuitars} from '../../../../store/api-actions/api-actions';
@@ -11,9 +10,8 @@ import SearchList from './search-list/search-list';
 import SearchField from './search-field/search-field';
 
 function Search(): JSX.Element {
-  const {guitars, guitarCount} = useSelector(getFoundGuitars);
-
   const dispatch = useDispatch();
+  const {guitars, guitarCount} = useSelector(getFoundGuitars);
   const [fieldValue, setFieldValue] = useState('');
 
   const handleFormChange = ({target}: ChangeEvent<HTMLFormElement>) => {
@@ -21,7 +19,7 @@ function Search(): JSX.Element {
     const truncValue = value.trim();
 
     setFieldValue(truncValue);
-    debouncedFetchData(dispatch, fetchFoundGuitars, searchGuitars, truncValue);
+    debouncedFindGuitars(dispatch, fetchFoundGuitars, searchGuitars, truncValue);
   };
 
   const handleSearchBlur = ({currentTarget, relatedTarget}: FocusEvent<Element | Node>) => !currentTarget

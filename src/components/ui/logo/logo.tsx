@@ -1,8 +1,6 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import cn from 'classnames';
-
-import './logo.css';
 
 import {AppRoute} from '../../../const';
 
@@ -16,11 +14,9 @@ function Logo({className}: LogoProps) {
   });
 
   return (
-    <NavLink
+    <Link
       className={logoClass}
-      activeClassName="logo--active"
       to={AppRoute.Root}
-      exact
     >
       <img
         className="logo__img"
@@ -29,7 +25,7 @@ function Logo({className}: LogoProps) {
         width={70}
         height={70}
       />
-    </NavLink>
+    </Link>
   );
 }
 
