@@ -7,12 +7,15 @@ type SortTypeButtonProps = {
   currentType: string,
   activeType: string,
   title: string,
-  handleSortTypeButtonClick: (value: string) => void,
+  onSortTypeButtonClick: (value: string) => void,
 };
 
-function SortTypeButton(
-  {currentType, activeType, title, handleSortTypeButtonClick}: SortTypeButtonProps,
-): JSX.Element {
+function SortTypeButton({
+  currentType,
+  activeType,
+  title,
+  onSortTypeButtonClick,
+}: SortTypeButtonProps): JSX.Element {
   const isActiveType = isActive(currentType, activeType);
   const tabIndex = getTabIndexValue(isActiveType);
 
@@ -20,7 +23,7 @@ function SortTypeButton(
     'catalog-sort__type-button--active': isActiveType,
   });
 
-  const handleButtonClick = () => handleSortTypeButtonClick(currentType);
+  const handleButtonClick = () => onSortTypeButtonClick(currentType);
 
   return (
     <button

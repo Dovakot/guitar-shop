@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import './sorting.css';
 
 import {SortType} from '../../../../const';
-import {debouncedSortGuitars} from '../../../../utils/utils';
+import {debouncedFetchGuitars} from '../../../../utils/utils';
 import {setSortTypes} from '../../../../store/actions/actions';
 import {fetchGuitars} from '../../../../store/api-actions/api-actions';
 import {getSortType, getSortOrder} from '../../../../store/reducers/guitar-data/selectors';
@@ -21,7 +21,7 @@ function Sorting(): JSX.Element {
     const currentValue = {sortType: [type], sortOrder: [order]};
 
     dispatch(setSortTypes(currentValue));
-    debouncedSortGuitars(dispatch, fetchGuitars, currentValue);
+    debouncedFetchGuitars(dispatch, fetchGuitars, currentValue);
   };
 
   const handleSortTypeButtonClick = (type: string) => sortGuitars(type, sortOrder || SortType.Up);
@@ -36,13 +36,13 @@ function Sorting(): JSX.Element {
           currentType={SortType.Price}
           activeType={sortType}
           title="по цене"
-          handleSortTypeButtonClick={handleSortTypeButtonClick}
+          onSortTypeButtonClick={handleSortTypeButtonClick}
         />
         <SortTypeButton
           currentType={SortType.Rating}
           activeType={sortType}
           title="по популярности"
-          handleSortTypeButtonClick={handleSortTypeButtonClick}
+          onSortTypeButtonClick={handleSortTypeButtonClick}
         />
       </div>
 
@@ -51,13 +51,13 @@ function Sorting(): JSX.Element {
           currentOrder={SortType.Up}
           activeOrder={sortOrder}
           title="По возрастанию"
-          handleSortOrderButtonClick={handleSortOrderButtonClick}
+          onSortOrderButtonClick={handleSortOrderButtonClick}
         />
         <SortOrderButton
           currentOrder={SortType.Down}
           activeOrder={sortOrder}
           title="По убыванию"
-          handleSortOrderButtonClick={handleSortOrderButtonClick}
+          onSortOrderButtonClick={handleSortOrderButtonClick}
         />
       </div>
     </div>

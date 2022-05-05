@@ -18,10 +18,10 @@ const debouncedFindGuitars = debounce((
   value?: string,
 ) => value ? dispatch(getData(value)) : dispatch(resetData()), DELAY_MILLISECONDS);
 
-const debouncedSortGuitars = debounce((
+const debouncedFetchGuitars = debounce((
   dispatch: Dispatch<ThunkActionResult | void>,
-  getData: (a: GeneratedParams) => ThunkActionResult,
-  currentValue: GeneratedParams,
+  getData: (a?: GeneratedParams) => ThunkActionResult,
+  currentValue?: GeneratedParams,
 ) => dispatch(getData(currentValue)), DELAY_MILLISECONDS);
 
 const formatPrice = (price: number) => new Intl.NumberFormat('ru-RU').format(price);
@@ -32,7 +32,7 @@ const isActive = (currentValue: string, activeValue: string) => currentValue ===
 
 export {
   debouncedFindGuitars,
-  debouncedSortGuitars,
+  debouncedFetchGuitars,
   formatPrice,
   getTabIndexValue,
   isActive

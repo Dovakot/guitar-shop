@@ -7,8 +7,8 @@ const queryСonfig: {[key: string]: string} = {
   guitarsFrom: SearchParams.GuitarsFrom,
   guitarTypes: SearchParams.GuitarTypes,
   stringCount: SearchParams.StringCount,
-  priceGte: SearchParams.PriceGte,
-  priceLte: SearchParams.PriceLte,
+  minPrice: SearchParams.PriceGte,
+  maxPrice: SearchParams.PriceLte,
 };
 
 const getSearchParamValues = (search: string, name: string) => new URLSearchParams(search).getAll(name);

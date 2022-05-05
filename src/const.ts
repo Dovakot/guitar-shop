@@ -14,6 +14,12 @@ enum AppRoute {
   Cart = '/cart',
 }
 
+enum ApiRoute {
+  Guitars = '/guitars',
+  MinPrice = '_sort=price&_order=asc&_limit=1',
+  MaxPrice = '_sort=price&_order=desc&_limit=1',
+}
+
 enum NavLinkTitle {
   Root = 'Главная',
   Catalog = 'Каталог',
@@ -30,7 +36,6 @@ enum SearchParams {
   SortType = '_sort',
   SortOrder = '_order',
   GuitarsFrom = '_start',
-  GuitarsTo = '_limit',
   GuitarTypes = 'type',
   StringCount = 'stringCount',
   PriceGte = 'price_gte',
@@ -42,6 +47,19 @@ enum SortType {
   Down = 'desc',
   Price = 'price',
   Rating = 'rating',
+}
+
+enum GuitarType {
+  Acoustic = 'acoustic',
+  Electric = 'electric',
+  Ukulele = 'ukulele',
+}
+
+enum GuitarString {
+  Four = '4',
+  Six = '6',
+  Seven = '7',
+  Twelve = '12',
 }
 
 enum MessageText {
@@ -57,8 +75,11 @@ const DEFAULT_PAGE_PATH = generatePath(AppRoute.Catalog, {page: DEFAULT_PAGE});
 export {
   SearchParams,
   AppRoute,
+  ApiRoute,
   NavLinkTitle,
   SortType,
+  GuitarType,
+  GuitarString,
   MessageText,
   MAX_GUITAR_COUNT,
   DEFAULT_PAGE,

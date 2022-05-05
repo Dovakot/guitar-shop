@@ -1,11 +1,11 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 
 import './loading-catalog.css';
 
 import {MessageText} from '../../../const';
-import {fetchGuitars} from '../../../store/api-actions/api-actions';
+import {fetchGuitars, fetchGuitarPrice} from '../../../store/api-actions/api-actions';
 import {setStatusIsLoading, setOptions} from '../../../store/actions/actions';
 
 import Spinner from '../spinner/spinner';
@@ -18,11 +18,12 @@ function LoadingCatalog({isError}: LoadingProps): JSX.Element {
   const dispatch = useDispatch();
   const {search} = useLocation();
 
-  const initFetch = useCallback(() => {
+  useEffect(() => {
     const setStatusApp = (flag: boolean) => dispatch(setStatusIsLoading(flag));
 
     (async () => {
       await dispatch(setOptions(search));
+      await dispatch(fetchGuitarPrice());
 
       try {
         await dispatch(fetchGuitars());
@@ -33,8 +34,6 @@ function LoadingCatalog({isError}: LoadingProps): JSX.Element {
       }
     })();
   }, [dispatch, search]);
-
-  useEffect(() => initFetch(), [initFetch]);
 
   return (
     <>

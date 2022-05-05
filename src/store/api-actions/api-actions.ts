@@ -1,10 +1,10 @@
 import {toast} from 'react-toastify';
 
-import {SearchParams, MessageText, MAX_GUITAR_COUNT} from '../../const';
+import {MessageText, ApiRoute, MAX_GUITAR_COUNT} from '../../const';
 import {getUrlToQuery} from '../../utils/query-utils';
 import {ThunkActionResult} from '../../types/store-types';
 import {GeneratedParams} from '../../types/types';
-import {loadGuitars, searchGuitars, redirect} from '../actions/actions';
+import {loadGuitars, searchGuitars, setDefaultGuitarPrices, redirect} from '../actions/actions';
 
 const fetchGuitars = (currentValue?: GeneratedParams): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -18,7 +18,7 @@ const fetchGuitars = (currentValue?: GeneratedParams): ThunkActionResult =>
     }
 
     try {
-      const {data, headers} = await api.get(`/guitars?${SearchParams.GuitarsTo}=${MAX_GUITAR_COUNT}${url}`);
+      const {data, headers} = await api.get(`${ApiRoute.Guitars}?_limit=${MAX_GUITAR_COUNT}${url}`);
 
       dispatch(loadGuitars(false, data, headers['x-total-count']));
     } catch {
@@ -27,10 +27,22 @@ const fetchGuitars = (currentValue?: GeneratedParams): ThunkActionResult =>
     }
   };
 
+const fetchGuitarPrice = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data: [minData]} = await api.get(`${ApiRoute.Guitars}?${ApiRoute.MinPrice}`);
+      const {data: [maxData]} = await api.get(`${ApiRoute.Guitars}?${ApiRoute.MaxPrice}`);
+
+      dispatch(setDefaultGuitarPrices(minData.price, maxData.price));
+    } catch {
+      toast.error(MessageText.Error);
+    }
+  };
+
 const fetchFoundGuitars = (name: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     try {
-      const {data} = await api.get(`/guitars?name_like=${name}`);
+      const {data} = await api.get(`${ApiRoute.Guitars}?name_like=${name}`);
 
       dispatch(searchGuitars(data));
     } catch {
@@ -40,5 +52,6 @@ const fetchFoundGuitars = (name: string): ThunkActionResult =>
 
 export {
   fetchGuitars,
+  fetchGuitarPrice,
   fetchFoundGuitars
 };

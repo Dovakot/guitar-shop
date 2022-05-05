@@ -8,12 +8,15 @@ type SortOrderButtonProps = {
   currentOrder: string,
   activeOrder: string,
   title: string,
-  handleSortOrderButtonClick: (value: string) => void,
+  onSortOrderButtonClick: (value: string) => void,
 };
 
-function SortOrderButton(
-  {currentOrder, activeOrder, title, handleSortOrderButtonClick}: SortOrderButtonProps,
-): JSX.Element {
+function SortOrderButton({
+  currentOrder,
+  activeOrder,
+  title,
+  onSortOrderButtonClick,
+}: SortOrderButtonProps): JSX.Element {
   const isActiveOrder = isActive(currentOrder, activeOrder);
   const tabIndex = getTabIndexValue(isActiveOrder);
 
@@ -23,7 +26,7 @@ function SortOrderButton(
     'catalog-sort__order-button--down': isActive(currentOrder, SortType.Down),
   });
 
-  const handleButtonClick = () => handleSortOrderButtonClick(currentOrder);
+  const handleButtonClick = () => onSortOrderButtonClick(currentOrder);
 
   return (
     <button
