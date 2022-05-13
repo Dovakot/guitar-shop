@@ -22,9 +22,11 @@ const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string):
 
       dispatch(isLoadingGuitars(false));
       dispatch(loadGuitars(data, +headers[TOTAL_COUNT_HEADER]));
-    } catch {
+    } catch(error) {
       dispatch(isLoadingGuitars(false));
       toast.error(MessageText.Error);
+
+      throw error;
     }
   };
 
@@ -45,7 +47,7 @@ const fetchGuitarPrice = (): ThunkActionResult =>
       const {data: [maxData]} = await api.get(`${ApiRoute.Guitars}?_limit=1${urlMaxPrice}`);
 
       dispatch(setDefaultGuitarPrices(minData.price, maxData.price));
-    } catch {
+    } catch(error) {
       toast.error(MessageText.PriceError);
     }
   };
@@ -56,7 +58,7 @@ const fetchFoundGuitars = (name: string): ThunkActionResult =>
       const {data} = await api.get(`${ApiRoute.Guitars}?name_like=${name}`);
 
       dispatch(searchGuitars(data));
-    } catch {
+    } catch(error) {
       toast.error(MessageText.Error);
     }
   };

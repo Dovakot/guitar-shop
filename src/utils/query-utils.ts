@@ -12,6 +12,8 @@ const queryСonfig: {[key: string]: string} = {
 };
 
 const replaceGuitarPriceParams = (orderType: string) => ({
+  minPrice: [],
+  maxPrice: [],
   guitarsFrom: [],
   sortType: [SortType.Price],
   sortOrder: [orderType],

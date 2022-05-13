@@ -23,12 +23,12 @@ function LoadingCatalog({isError}: LoadingProps): JSX.Element {
 
     (async () => {
       await dispatch(setOptions(search));
-      await dispatch(fetchGuitarPrice());
 
       try {
         await dispatch(fetchGuitars());
-        setStatusApp(false);
+        await dispatch(fetchGuitarPrice());
 
+        setStatusApp(false);
       } catch {
         setStatusApp(true);
       }
