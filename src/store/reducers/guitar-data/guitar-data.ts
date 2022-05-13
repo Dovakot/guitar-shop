@@ -1,7 +1,15 @@
 import {createReducer} from '@reduxjs/toolkit';
 
 import {
-  setDefaultOptionsToStore,
+  addStringToArray
+} from '../../../utils/utils';
+
+import {
+  getCatalogTotalPages,
+  changeCatalogPage
+} from '../../../utils/pagination-utils';
+
+import {
   adaptSearchParamsToStore
 } from '../../../utils/query-utils';
 
@@ -22,45 +30,23 @@ import {
   setGuitarPriceMin,
   setGuitarPriceMax,
   setOptions,
-  resetMainPageData
+  setCatalogPage,
+  resetMainPageData,
+  isLoadingGuitars
 } from '../../actions/actions';
 
-const addStringToArray = (value: string) => value ? [value] : [];
+import guitarInitialState from './guitar-initial-state';
 
-const OPTIONS_DATA_DEFAULT = setDefaultOptionsToStore();
-const GUITARS_DATA_DEFAULT = {
-  data: [],
-  totalCount: 0,
-  isLoading: false,
-};
-
-const initialState = {
-  guitars: GUITARS_DATA_DEFAULT,
-  search: {
-    guitars: [],
-    guitarCount: 0,
-  },
-  filter: {
-    defaultPriceMin: 0,
-    defaultPriceMax: 0,
-    guitarTypes: [],
-    guitarStrings: [],
-  },
-  options: OPTIONS_DATA_DEFAULT,
-  isLoading: true,
-  isError: false,
-};
-
-const guitarData = createReducer(initialState, (builder) => {
+const guitarData = createReducer(guitarInitialState, (builder) => {
   builder
     .addCase(setStatusIsLoading, (state, {payload}) => {
       state.isLoading = payload.isLoading;
       state.isError = payload.isError;
     })
-    .addCase(loadGuitars, ({guitars}, {payload}) => {
-      guitars.data = payload.guitars;
-      guitars.totalCount = +payload.totalCount;
-      guitars.isLoading = payload.isLoading;
+    .addCase(loadGuitars, (state, {payload}) => {
+      state.guitars.data = payload.guitars;
+      state.guitars.totalCount = payload.totalCount;
+      state.pages = getCatalogTotalPages(payload.totalCount);
     })
     .addCase(searchGuitars, ({search}, {payload}) => {
       search.guitars = payload ;
@@ -93,9 +79,15 @@ const guitarData = createReducer(initialState, (builder) => {
       state.filter.guitarTypes = checkGuitarTypes(state.options.stringCount);
       state.filter.guitarStrings = checkGuitarStrings(state.options.guitarTypes);
     })
+    .addCase(setCatalogPage, ({options}, {payload}) => {
+      const changedPage = changeCatalogPage(payload);
+
+      options.guitarsFrom = addStringToArray(changedPage);
+    })
+    .addCase(isLoadingGuitars, ({guitars}, {payload}) => {
+      guitars.isLoading = payload;
+    })
     .addCase(resetMainPageData, (state) => {
-      state.guitars = GUITARS_DATA_DEFAULT;
-      state.options = OPTIONS_DATA_DEFAULT;
       state.isLoading = true;
       state.isError = false;
     });

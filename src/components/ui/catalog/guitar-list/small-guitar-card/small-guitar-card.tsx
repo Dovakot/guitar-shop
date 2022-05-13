@@ -12,11 +12,16 @@ function SmallGuitarCard({
   stringCount,
   rating,
   price,
+  comments,
 }: GuitarCard): JSX.Element {
   const formattedPrice = formatPrice(price);
+  const commentCount = comments.length;
 
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      data-testid="small-card"
+    >
       <img
         src={previewImg}
         alt={name}
@@ -26,7 +31,7 @@ function SmallGuitarCard({
       <div className="product-card__info">
         <Rating
           rating={rating}
-          comments={stringCount}
+          comments={commentCount}
           className="product-card__rate"
         />
 

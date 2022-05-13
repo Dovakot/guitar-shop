@@ -1,41 +1,52 @@
 import {toast} from 'react-toastify';
 
-import {MessageText, ApiRoute, MAX_GUITAR_COUNT} from '../../const';
-import {getUrlToQuery} from '../../utils/query-utils';
+import {MessageText, ApiRoute, SortType, TOTAL_COUNT_HEADER, MAX_GUITAR_COUNT} from '../../const';
+import {replaceGuitarPriceParams, getUrlToQuery, getLocation} from '../../utils/query-utils';
 import {ThunkActionResult} from '../../types/store-types';
 import {GeneratedParams} from '../../types/types';
-import {loadGuitars, searchGuitars, setDefaultGuitarPrices, redirect} from '../actions/actions';
+import {loadGuitars, searchGuitars, setDefaultGuitarPrices, redirect, isLoadingGuitars} from '../actions/actions';
 
-const fetchGuitars = (currentValue?: GeneratedParams): ThunkActionResult =>
+const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {options, isLoading} = _getState().GUITAR;
     const url = getUrlToQuery({...options, ...currentValue});
-    const location = {search: url.replace('&', '')};
+    const location = getLocation(url, currentLocation);
 
     if (!isLoading) {
-      dispatch(loadGuitars(true));
+      dispatch(isLoadingGuitars(true));
       dispatch(redirect(location));
     }
 
     try {
-      const {data, headers} = await api.get(`${ApiRoute.Guitars}?_limit=${MAX_GUITAR_COUNT}${url}`);
+      const {data, headers} = await api.get(`${ApiRoute.Guitars}?_limit=${MAX_GUITAR_COUNT}&_embed=comments${url}`);
 
-      dispatch(loadGuitars(false, data, headers['x-total-count']));
+      dispatch(isLoadingGuitars(false));
+      dispatch(loadGuitars(data, +headers[TOTAL_COUNT_HEADER]));
     } catch {
-      dispatch(loadGuitars(false));
+      dispatch(isLoadingGuitars(false));
       toast.error(MessageText.Error);
     }
   };
 
 const fetchGuitarPrice = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
+    const {options} = _getState().GUITAR;
+    const urlMinPrice = getUrlToQuery({
+      ...options,
+      ...replaceGuitarPriceParams(SortType.Up),
+    });
+    const urlMaxPrice = getUrlToQuery({
+      ...options,
+      ...replaceGuitarPriceParams(SortType.Down),
+    });
+
     try {
-      const {data: [minData]} = await api.get(`${ApiRoute.Guitars}?${ApiRoute.MinPrice}`);
-      const {data: [maxData]} = await api.get(`${ApiRoute.Guitars}?${ApiRoute.MaxPrice}`);
+      const {data: [minData]} = await api.get(`${ApiRoute.Guitars}?_limit=1${urlMinPrice}`);
+      const {data: [maxData]} = await api.get(`${ApiRoute.Guitars}?_limit=1${urlMaxPrice}`);
 
       dispatch(setDefaultGuitarPrices(minData.price, maxData.price));
     } catch {
-      toast.error(MessageText.Error);
+      toast.error(MessageText.PriceError);
     }
   };
 

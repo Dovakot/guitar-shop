@@ -7,11 +7,13 @@ type SvgIconProps = {
     height: number,
   },
   className?: string,
+  testId?: string,
 };
 
 function SvgIcon({
   icon: {id, width, height},
   className,
+  testId,
 }: SvgIconProps): JSX.Element {
   const linkHref = `#${id}`;
 
@@ -22,6 +24,7 @@ function SvgIcon({
       height={height}
       aria-hidden="true"
       focusable="false"
+      data-testid={testId}
     >
       <use xlinkHref={linkHref} />
     </svg>

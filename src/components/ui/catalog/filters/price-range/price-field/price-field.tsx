@@ -34,6 +34,7 @@ function PriceField({
       defaultValue={defaultValue}
       placeholder={formattedPlaceholder}
       onBlur={onFieldBlur}
+      data-testid="price-field"
     />
   );
 }

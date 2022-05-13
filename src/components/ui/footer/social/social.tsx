@@ -32,7 +32,10 @@ const getSocialItem = ({name, path}: SocialItemProps) =>(
 
 function Social(): JSX.Element {
   return (
-    <div className="socials footer__socials">
+    <div
+      className="socials footer__socials"
+      data-testid="social"
+    >
       <ul className="socials__list">
         {socialList.map(getSocialItem)}
       </ul>

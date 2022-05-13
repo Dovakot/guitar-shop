@@ -1,23 +1,43 @@
 import React from 'react';
 
 import {AppRoute, NavLinkTitle} from '../../../const';
-import useGeneratePath from '../../../hooks/use-generate-path/use-generate-path';
+import {NavItem} from '../../../types/types';
+import {addBreadcrumbsItem} from '../../../utils/utils';
 
 import BreadcrumbsItem from './breadcrumbs-item/breadcrumbs-item';
 
 type BreadcrumbsProps = {
-  name?: string,
-  currentLink?: string,
+  newItem?: NavItem,
 };
 
-function Breadcrumbs({name, currentLink}: BreadcrumbsProps): JSX.Element {
-  const generatedPathToCatalog = useGeneratePath(AppRoute.Catalog);
+const navList = [
+  {
+    id: 'root',
+    name: NavLinkTitle.Root,
+    route: AppRoute.Root,
+  },
+  {
+    id: 'catalog',
+    name: NavLinkTitle.Catalog,
+    route: AppRoute.Catalog,
+  },
+];
+
+const getBreadcrumbsItem = ({id, name, route}: NavItem) => (
+  <BreadcrumbsItem
+    key={id}
+    id={id}
+    name={name}
+    route={route}
+  />
+);
+
+function Breadcrumbs({newItem}: BreadcrumbsProps): JSX.Element {
+  const breadcrumbs = newItem ? addBreadcrumbsItem(navList, newItem) : navList;
 
   return (
     <ul className="breadcrumbs page-content__breadcrumbs">
-      <BreadcrumbsItem name={NavLinkTitle.Root} link={AppRoute.Root} />
-      <BreadcrumbsItem name={NavLinkTitle.Catalog} link={generatedPathToCatalog} />
-      {name && currentLink && <BreadcrumbsItem name={name} link={currentLink} />}
+      {breadcrumbs.map(getBreadcrumbsItem)}
     </ul>
   );
 }

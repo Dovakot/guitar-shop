@@ -6,7 +6,10 @@ import Social from './social/social';
 
 function Footer(): JSX.Element {
   return (
-    <footer className="footer">
+    <footer
+      className="footer"
+      data-testid="footer"
+    >
       <div className="footer__container container">
         <Logo className="footer" />
         <Social />

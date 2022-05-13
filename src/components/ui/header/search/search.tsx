@@ -31,7 +31,11 @@ function Search(): JSX.Element {
   }, [dispatch]);
 
   return (
-    <div className="form-search" onBlur={handleSearchBlur}>
+    <div
+      className="form-search"
+      data-testid="header-search"
+      onBlur={handleSearchBlur}
+    >
       <form
         className="form-search__form"
         onChange={handleFormChange}

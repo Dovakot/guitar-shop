@@ -6,6 +6,10 @@ import {getGuitarTypes, getValidatedGuitarTypes} from '../../../../../store/redu
 
 import Checkbox from '../checkbox/checkbox';
 
+type GuitarTypeListProps = {
+  getGuitarsForDefaultPage: () => void,
+};
+
 const guitarTypeRu: {[key: string]: string} = {
   acoustic: 'Акустические',
   electric: 'Электрогитары',
@@ -14,7 +18,7 @@ const guitarTypeRu: {[key: string]: string} = {
 
 const guitarTypes = Object.values(GuitarType);
 
-function GuitarTypeList(): JSX.Element {
+function GuitarTypeList({getGuitarsForDefaultPage}: GuitarTypeListProps): JSX.Element {
   const checkedGuitarTypes = useSelector(getGuitarTypes);
   const validatedGuitarTypes = useSelector(getValidatedGuitarTypes);
 
@@ -29,6 +33,7 @@ function GuitarTypeList(): JSX.Element {
         label={label}
         checkedGuitarAttr={checkedGuitarTypes}
         validatedGuitarAttr={validatedGuitarTypes}
+        getGuitarsForDefaultPage={getGuitarsForDefaultPage}
         isGuitarType
       />
     );

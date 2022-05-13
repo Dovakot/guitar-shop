@@ -17,7 +17,10 @@ function SocialItem({label, currentLink}: SocialItemProps): JSX.Element {
   const iconConfig = getIconConfig(label);
 
   return (
-    <li className="socials-item">
+    <li
+      className="socials-item"
+      data-testid="social-item"
+    >
       <a
         className="socials__link"
         href={currentLink}

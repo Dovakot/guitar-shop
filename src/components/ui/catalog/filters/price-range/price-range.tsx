@@ -1,15 +1,17 @@
 import React, {FocusEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {debouncedFetchGuitars} from '../../../../../utils/utils';
 import {checkValue} from '../../../../../utils/filter-utils';
 import {setGuitarPriceMin, setGuitarPriceMax} from '../../../../../store/actions/actions';
-import {fetchGuitars} from '../../../../../store/api-actions/api-actions';
 import {getDefaultGuitarPrice, getGuitarPrice} from '../../../../../store/reducers/guitar-data/selectors';
 
 import PriceField from './price-field/price-field';
 
-function PriceRange(): JSX.Element {
+type PriceRangeProps = {
+  getGuitarsForDefaultPage: () => void,
+};
+
+function PriceRange({getGuitarsForDefaultPage}: PriceRangeProps): JSX.Element {
   const dispatch = useDispatch();
   const {defaultPriceMin, defaultPriceMax} = useSelector(getDefaultGuitarPrice);
   const {minPrice, maxPrice} = useSelector(getGuitarPrice);
@@ -25,7 +27,7 @@ function PriceRange(): JSX.Element {
     await dispatch(cb(target.value));
 
     if (isChecked) {
-      debouncedFetchGuitars(dispatch, fetchGuitars);
+      getGuitarsForDefaultPage();
     }
   };
 
@@ -36,7 +38,10 @@ function PriceRange(): JSX.Element {
     changeGuitarPrice(target, defaultPriceMax, maxPrice, setGuitarPriceMax);
 
   return (
-    <div className="catalog-filter__price-range">
+    <div
+      className="catalog-filter__price-range"
+      data-testid="price-range"
+    >
       <div className="form-input">
         <label className="visually-hidden">Минимальная цена</label>
 

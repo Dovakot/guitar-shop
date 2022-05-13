@@ -12,6 +12,8 @@ enum ActionType {
   SetGuitarPriceMin = 'guitar/setGuitarPriceMin',
   SetGuitarPriceMax = 'guitar/setGuitarPriceMax',
   SetOptions = 'guitar/setOptions',
+  SetCatalogPage = 'guitar/setCatalogPage',
+  IsLoadingGuitars = 'guitar/isLoadingGuitars',
   RedirectToRoute = 'app/redirect',
 }
 
@@ -22,9 +24,8 @@ const setStatusIsLoading = createAction(ActionType.SetStatusIsLoading, (isError)
   },
 }));
 
-const loadGuitars = createAction(ActionType.LoadGuitars, (isLoading, guitars = [], totalCount = 0) => ({
+const loadGuitars = createAction(ActionType.LoadGuitars, (guitars, totalCount) => ({
   payload: {
-    isLoading,
     guitars,
     totalCount,
   },
@@ -69,6 +70,14 @@ const setOptions = createAction(ActionType.SetOptions, (search) => ({
   payload: search,
 }));
 
+const setCatalogPage = createAction(ActionType.SetCatalogPage, (page) => ({
+  payload: page,
+}));
+
+const isLoadingGuitars = createAction(ActionType.IsLoadingGuitars, (isLoading) => ({
+  payload: isLoading,
+}));
+
 const resetMainPageData = createAction(ActionType.ResetMainPageData);
 
 export {
@@ -84,5 +93,7 @@ export {
   setDefaultGuitarPrices,
   setGuitarPriceMin,
   setGuitarPriceMax,
-  setOptions
+  setOptions,
+  setCatalogPage,
+  isLoadingGuitars
 };

@@ -1,6 +1,8 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
+import './guitar-list.css';
+
 import {MessageText} from '../../../../const';
 import {GuitarCard, Guitars} from '../../../../types/guitar-types';
 import {getGuitars} from '../../../../store/reducers/guitar-data/selectors';
@@ -21,7 +23,10 @@ function GuitarList(): JSX.Element {
   const {data, isLoading} = useSelector(getGuitars);
 
   return (
-    <div className="cards catalog__cards">
+    <div
+      className="cards catalog__cards"
+      data-testid="catalog-cards"
+    >
       {isLoading ? MessageText.Loading : getGuitarList(data)}
     </div>
   );

@@ -12,7 +12,10 @@ function SearchItem({id, name}: SearchItemProps): JSX.Element {
   const pathToGuitar = generatePath(AppRoute.Guitar, {id});
 
   return (
-    <li className="form-search__select-item">
+    <li
+      className="form-search__select-item"
+      data-testid="search-item"
+    >
       <Link to={pathToGuitar}>{name}</Link>
     </li>
   );

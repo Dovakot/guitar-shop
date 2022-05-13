@@ -5,28 +5,33 @@ import {AppRoute, NavLinkTitle} from '../../../../const';
 import NavItem from './nav-item/nav-item';
 
 type NavItemProps = {
+  id: string,
   name: string,
   route: string,
 };
 
 const navList = [
   {
+    id: 'catalog',
     name: NavLinkTitle.Catalog,
     route: AppRoute.Catalog,
   },
   {
+    id: 'stores',
     name: NavLinkTitle.Stores,
     route: AppRoute.Stores,
   },
   {
+    id: 'about',
     name: NavLinkTitle.About,
     route: AppRoute.About,
   },
 ];
 
-const getNavItem = ({name, route}: NavItemProps) => (
+const getNavItem = ({id, name, route}: NavItemProps) => (
   <NavItem
-    key={name}
+    key={id}
+    id={id}
     name={name}
     currentLink={route}
   />
@@ -34,7 +39,10 @@ const getNavItem = ({name, route}: NavItemProps) => (
 
 function Nav(): JSX.Element {
   return (
-    <nav className="main-nav">
+    <nav
+      className="main-nav"
+      data-testid="header-nav"
+    >
       <ul className="main-nav__list">
         {navList.map(getNavItem)}
       </ul>

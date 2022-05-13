@@ -7,7 +7,10 @@ import Breadcrumbs from '../../ui/breadcrumbs/breadcrumbs';
 
 function ContentWrapper({children, title, isBreadcrumbs}: Page): JSX.Element {
   return (
-    <main className="page-content">
+    <main
+      className="page-content"
+      data-testid="page-content"
+    >
       <div className="container">
         <h1 className="page-content__title title title--bigger">{title}</h1>
 

@@ -14,6 +14,7 @@ function SearchField({fieldValue}: SearchFieldProps): JSX.Element {
         autoComplete="off"
         placeholder="что вы ищите?"
         defaultValue={fieldValue}
+        data-testid="search"
       />
       <label className="visually-hidden" htmlFor="search">Поиск</label>
     </>

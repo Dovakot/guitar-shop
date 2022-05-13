@@ -1,9 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {debouncedFetchGuitars} from '../../../../../utils/utils';
 import {isDisabledCheckbox, isCheckedCheckbox} from '../../../../../utils/filter-utils';
-import {fetchGuitars} from '../../../../../store/api-actions/api-actions';
+import {fetchGuitarPrice} from '../../../../../store/api-actions/api-actions';
 import {setGuitarTypes, setGuitarStrings} from '../../../../../store/actions/actions';
 
 type CheckboxProps = {
@@ -12,6 +11,7 @@ type CheckboxProps = {
   defaultValue: string,
   checkedGuitarAttr: string[],
   validatedGuitarAttr: string[],
+  getGuitarsForDefaultPage: () => void,
   isGuitarType?: boolean,
 };
 
@@ -21,6 +21,7 @@ function Checkbox({
   defaultValue,
   checkedGuitarAttr,
   validatedGuitarAttr,
+  getGuitarsForDefaultPage,
   isGuitarType,
 }: CheckboxProps): JSX.Element {
   const dispatch = useDispatch();
@@ -33,7 +34,8 @@ function Checkbox({
       : dispatch(setGuitarStrings(value));
 
     await setValue(target.value);
-    debouncedFetchGuitars(dispatch, fetchGuitars);
+    getGuitarsForDefaultPage();
+    dispatch(fetchGuitarPrice());
   };
 
   return (
@@ -47,6 +49,7 @@ function Checkbox({
         defaultValue={defaultValue}
         defaultChecked={isChecked}
         onChange={handleCheckboxChange}
+        data-testid="checkbox"
       />
       <label htmlFor={name}>
         {label}

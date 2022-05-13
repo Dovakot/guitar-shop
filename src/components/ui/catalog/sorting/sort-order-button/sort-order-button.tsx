@@ -34,6 +34,7 @@ function SortOrderButton({
       aria-label={title}
       tabIndex={tabIndex}
       onClick={handleButtonClick}
+      data-testid="sort-order-button"
     />
   );
 }

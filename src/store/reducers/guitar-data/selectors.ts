@@ -29,6 +29,8 @@ const getGuitarTypes = (state: RootState) => state[NameSpace.Guitar].options.gui
 const getValidatedGuitarTypes = (state: RootState) => state[NameSpace.Guitar].filter.guitarTypes;
 const getValidatedGuitarStrings = (state: RootState) => state[NameSpace.Guitar].filter.guitarStrings;
 
+const getCatalogPage = (state: RootState) => state[NameSpace.Guitar].pages;
+
 export {
   getStatusIsLoading,
   getDefaultGuitarPrice,
@@ -40,5 +42,6 @@ export {
   getValidatedGuitarStrings,
   getGuitarTypes,
   getGuitarStrings,
-  getSortOrder
+  getSortOrder,
+  getCatalogPage
 };

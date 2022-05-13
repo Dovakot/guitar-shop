@@ -4,7 +4,7 @@ import './spinner.css';
 
 function Spinner(): JSX.Element {
   return (
-    <div className="spinner"></div>
+    <div className="spinner" data-testid="spinner"></div>
   );
 }
 

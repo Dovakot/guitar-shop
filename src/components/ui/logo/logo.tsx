@@ -17,6 +17,7 @@ function Logo({className}: LogoProps) {
     <Link
       className={logoClass}
       to={AppRoute.Root}
+      data-testid="logo"
     >
       <img
         className="logo__img"

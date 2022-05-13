@@ -1,4 +1,4 @@
-import {SearchParams} from '../const';
+import {SearchParams, SortType} from '../const';
 import {GeneratedParams} from '../types/types';
 
 const queryСonfig: {[key: string]: string} = {
@@ -11,9 +11,15 @@ const queryСonfig: {[key: string]: string} = {
   maxPrice: SearchParams.PriceLte,
 };
 
+const replaceGuitarPriceParams = (orderType: string) => ({
+  guitarsFrom: [],
+  sortType: [SortType.Price],
+  sortOrder: [orderType],
+});
+
 const getSearchParamValues = (search: string, name: string) => new URLSearchParams(search).getAll(name);
 
-const setDefaultOptionsToStore = () => Object.entries(queryСonfig)
+const getDefaultOptionsToStore = () => Object.entries(queryСonfig)
   .reduce((params: GeneratedParams, [key]) => {
     params[key] = [];
 
@@ -39,8 +45,16 @@ const getUrlToQuery = (data: GeneratedParams) => Object.entries(data)
     return url;
   }, '');
 
+const getLocation = (params: string, pathname?: string) => {
+  const search = params.replace('&', '');
+
+  return pathname ? {pathname, search} : {search};
+};
+
 export {
-  setDefaultOptionsToStore,
+  replaceGuitarPriceParams,
+  getDefaultOptionsToStore,
   adaptSearchParamsToStore,
-  getUrlToQuery
+  getUrlToQuery,
+  getLocation
 };

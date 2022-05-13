@@ -16,8 +16,6 @@ enum AppRoute {
 
 enum ApiRoute {
   Guitars = '/guitars',
-  MinPrice = '_sort=price&_order=asc&_limit=1',
-  MaxPrice = '_sort=price&_order=desc&_limit=1',
 }
 
 enum NavLinkTitle {
@@ -66,11 +64,22 @@ enum MessageText {
   Loading = 'Загрузка...',
   NotFound = 'Ничего не найдено :(',
   Error = 'При загрузке данных произошла ошибка',
+  PriceError = 'Произошла ошибка при загрузке минимальной и максимальной стоимости товаров',
 }
 
+enum PageInfo {
+  DefaultPage = 1,
+  MaxPage = 3,
+}
+
+enum PaginationInfo {
+  Back = 'Назад',
+  Next = 'Далее',
+}
+
+const TOTAL_COUNT_HEADER = 'x-total-count';
 const MAX_GUITAR_COUNT = 9;
-const DEFAULT_PAGE = 1;
-const DEFAULT_PAGE_PATH = generatePath(AppRoute.Catalog, {page: DEFAULT_PAGE});
+const DEFAULT_PAGE_PATH = generatePath(AppRoute.Catalog, {page: PageInfo.DefaultPage});
 
 export {
   SearchParams,
@@ -81,7 +90,9 @@ export {
   GuitarType,
   GuitarString,
   MessageText,
+  PageInfo,
+  PaginationInfo,
+  TOTAL_COUNT_HEADER,
   MAX_GUITAR_COUNT,
-  DEFAULT_PAGE,
   DEFAULT_PAGE_PATH
 };

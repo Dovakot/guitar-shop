@@ -6,9 +6,13 @@ import {getGuitarStrings, getValidatedGuitarStrings} from '../../../../../store/
 
 import Checkbox from '../checkbox/checkbox';
 
+type GuitarStringListProps = {
+  getGuitarsForDefaultPage: () => void,
+};
+
 const guitarStrings = Object.values(GuitarString);
 
-function GuitarStringList(): JSX.Element {
+function GuitarStringList({getGuitarsForDefaultPage}: GuitarStringListProps): JSX.Element {
   const checkedGuitarStrings = useSelector(getGuitarStrings);
   const validatedGuitarStrings = useSelector(getValidatedGuitarStrings);
 
@@ -23,6 +27,7 @@ function GuitarStringList(): JSX.Element {
         defaultValue={type}
         checkedGuitarAttr={checkedGuitarStrings}
         validatedGuitarAttr={validatedGuitarStrings}
+        getGuitarsForDefaultPage={getGuitarsForDefaultPage}
       />
     );
   };

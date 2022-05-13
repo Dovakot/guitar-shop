@@ -28,7 +28,10 @@ function Sorting(): JSX.Element {
   const handleSortOrderButtonClick = (order: string) => sortGuitars(sortType || SortType.Price, order);
 
   return (
-    <div className="catalog-sort">
+    <div
+      className="catalog-sort"
+      data-testid="catalog-sort"
+    >
       <h2 className="catalog-sort__title">Сортировать:</h2>
 
       <div className="catalog-sort__type">

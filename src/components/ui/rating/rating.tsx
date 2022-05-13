@@ -31,8 +31,15 @@ function Rating({rating, comments, className}: RatingProps): JSX.Element {
   const getStar = (star: undefined, index: number) => {
     const key = `star-${index}`;
     const iconOption = getIconConfig(index, rating);
+    const {id} = iconOption;
 
-    return <SvgIcon key={key} icon={iconOption} />;
+    return (
+      <SvgIcon
+        key={key}
+        icon={iconOption}
+        testId={id}
+      />
+    );
   };
 
   return (

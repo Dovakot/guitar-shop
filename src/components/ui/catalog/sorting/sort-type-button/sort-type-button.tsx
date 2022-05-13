@@ -31,6 +31,7 @@ function SortTypeButton({
       aria-label={title}
       tabIndex={tabIndex}
       onClick={handleButtonClick}
+      data-testid="sort-type-button"
     >
       {title}
     </button>
