@@ -6,19 +6,14 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 
 import {AppRoute} from '../../const';
-import {NameSpace} from '../../store/reducers/root-reducer';
-import guitarInitialState from '../../store/reducers/guitar-data/guitar-initial-state';
+import {mockInitialState} from '../../mock/store-mock';
 
 import App from './app';
 
 const history = createMemoryHistory();
 
 const mockStore = configureMockStore([thunk]);
-const store = mockStore({
-  [NameSpace.Guitar]: {
-    ...guitarInitialState,
-  },
-});
+const store = mockStore(mockInitialState);
 
 const renderTestingComponent = (path: string) => {
   history.push(path);
@@ -31,7 +26,6 @@ const renderTestingComponent = (path: string) => {
     </Provider>,
   );
 };
-
 
 describe('App component', () => {
   test('main page route works correctly', () => {

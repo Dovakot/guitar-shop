@@ -1,6 +1,6 @@
-import {ProductgData} from '../../../types/store-types';
+import {ProductData} from '../../../types/store-types';
 
-const productInitialState: ProductgData = {
+const productInitialState: ProductData = {
   guitars: [],
   foundGuitars: [],
   guitarCount: 0,

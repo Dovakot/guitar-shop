@@ -6,20 +6,19 @@ import thunk from 'redux-thunk';
 
 import {MessageText} from '../../../const';
 import {NameSpace} from '../../../store/reducers/root-reducer';
-import guitarInitialState from '../../../store/reducers/guitar-data/guitar-initial-state';
+import {getMockState} from '../../../mock/store-mock';
 
 import Main from './main';
 
 const mockStore = configureMockStore([thunk]);
 
 const renderTestingComponent = (isLoading: boolean, isError: boolean) => {
-  const store = mockStore({
-    [NameSpace.Guitar]: {
-      ...guitarInitialState,
-      isLoading: isLoading,
-      isError: isError,
-    },
+  const mockState = getMockState(NameSpace.Catalog, {
+    isLoading: isLoading,
+    isError: isError,
   });
+
+  const store = mockStore(mockState);
 
   return render(
     <Provider store={store}>

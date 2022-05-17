@@ -1,11 +1,9 @@
 import {fireEvent, render, screen} from '@testing-library/react';
-import {BrowserRouter, generatePath} from 'react-router-dom';
+import {BrowserRouter} from 'react-router-dom';
 
-import {AppRoute} from '../../../../../const';
+import {DEFAULT_PAGE_PATH} from '../../../../../const';
 
 import PaginationItem from './pagination-item';
-
-const currentLink = generatePath(AppRoute.Catalog, {page: 1});
 
 const renderTestingComponent = () => render(
   <BrowserRouter>
@@ -13,7 +11,7 @@ const renderTestingComponent = () => render(
       id={1}
       name={1}
       page={1}
-      pathname={currentLink}
+      pathname={DEFAULT_PAGE_PATH}
       onLinkClick={jest.fn()}
     />
   </BrowserRouter>,

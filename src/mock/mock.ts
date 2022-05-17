@@ -40,6 +40,7 @@ const mockGuitarStrings = [GuitarString.Six];
 
 const mockPriceMin = datatype.number();
 const mockPriceMax = datatype.number();
+const mockDefaultPrices = {minPrice: mockPriceMin, maxPrice: mockPriceMax};
 
 const mockCatalogPage = PageInfo.MaxPage;
 
@@ -53,5 +54,6 @@ export {
   mockGuitarStrings,
   mockPriceMin,
   mockPriceMax,
+  mockDefaultPrices,
   mockCatalogPage
 };

@@ -5,24 +5,14 @@ import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 
 import {ApiRoute, TOTAL_COUNT_HEADER, MAX_GUITAR_COUNT} from '../../const';
+import {mockCatalogGuitars, mockTotalCount} from '../../mock/mock';
 import createApi from '../../services/api';
 import {RootState} from '../../types/store-types';
-import {NameSpace} from '../reducers/root-reducer';
-import guitarInitialState from '../reducers/guitar-data/guitar-initial-state';
-
 import {fetchGuitars, fetchGuitarPrice, fetchFoundGuitars} from './api-actions';
+import {loadGuitars, searchGuitars, isLoadingGuitars} from '../reducers/product-data/product-data';
+import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
 
-import {
-  isLoadingGuitars,
-  loadGuitars,
-  setDefaultGuitarPrices,
-  searchGuitars
-} from '../actions/actions';
-
-import {
-  mockCatalogGuitars,
-  mockTotalCount
-} from '../../mock/mock';
+import {mockInitialState} from '../../mock/store-mock';
 
 const STATUS_OK = 200;
 
@@ -38,11 +28,7 @@ const mockStore = configureMockStore<
 
 describe('Api-actions', () => {
   it('should handle succeed get catalog guitars request', async () => {
-    const store = mockStore({
-      [NameSpace.Guitar]: {
-        ...guitarInitialState,
-      },
-    });
+    const store = mockStore(mockInitialState);
 
     mockApi.onGet(`${ApiRoute.Guitars}?_limit=${MAX_GUITAR_COUNT}&_embed=comments`)
       .reply(STATUS_OK, mockCatalogGuitars, {
@@ -54,16 +40,13 @@ describe('Api-actions', () => {
     expect(store.getActions())
       .toEqual([
         isLoadingGuitars(false),
-        loadGuitars(mockCatalogGuitars, mockTotalCount),
+        loadGuitars(mockCatalogGuitars),
+        setCatalogPages(mockTotalCount),
       ]);
   });
 
   it('should fetch guitar price', async () => {
-    const store = mockStore({
-      [NameSpace.Guitar]: {
-        ...guitarInitialState,
-      },
-    });
+    const store = mockStore(mockInitialState);
 
     const [minData] = mockCatalogGuitars;
     const [maxData] = mockCatalogGuitars;
@@ -75,7 +58,7 @@ describe('Api-actions', () => {
 
     expect(store.getActions())
       .toEqual([
-        setDefaultGuitarPrices(minData.price, maxData.price),
+        setDefaultPriceFilter({minPrice: minData.price, maxPrice: maxData.price}),
       ]);
   });
 

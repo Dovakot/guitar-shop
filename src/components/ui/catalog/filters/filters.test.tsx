@@ -2,17 +2,12 @@ import {Provider} from 'react-redux';
 import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 
-import {NameSpace} from '../../../../store/reducers/root-reducer';
-import guitarInitialState from '../../../../store/reducers/guitar-data/guitar-initial-state';
+import {mockInitialState} from '../../../../mock/store-mock';
 
 import Filters from './filters';
 
 const mockStore = configureMockStore();
-const store = mockStore({
-  [NameSpace.Guitar]: {
-    ...guitarInitialState,
-  },
-});
+const store = mockStore(mockInitialState);
 
 describe('Filters component', () => {
   test('should be rendered correctly', () => {

@@ -5,21 +5,18 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import userEvent from '@testing-library/user-event';
 
 import {NameSpace} from '../../../../store/reducers/root-reducer';
-import guitarInitialState from '../../../../store/reducers/guitar-data/guitar-initial-state';
 import {mockCatalogGuitars} from '../../../../mock/mock';
+import {getMockState} from '../../../../mock/store-mock';
 
 import Search from './search';
 
 const mockStore = configureMockStore();
-const store = mockStore({
-  [NameSpace.Guitar]: {
-    ...guitarInitialState,
-    search: {
-      guitars: mockCatalogGuitars,
-      guitarCount: mockCatalogGuitars.length,
-    },
-  },
+const mockState = getMockState(NameSpace.Product, {
+  foundGuitars: mockCatalogGuitars,
+  guitarCount: mockCatalogGuitars.length,
 });
+
+const store = mockStore(mockState);
 
 const renderTestingComponent = () => render(
   <Provider store={store}>

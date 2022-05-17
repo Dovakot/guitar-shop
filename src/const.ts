@@ -81,6 +81,10 @@ const TOTAL_COUNT_HEADER = 'x-total-count';
 const MAX_GUITAR_COUNT = 9;
 const DEFAULT_PAGE_PATH = generatePath(AppRoute.Catalog, {page: PageInfo.DefaultPage});
 
+const UNKNOWN_ACTION = {
+  type: 'UNKNOWN_ACTION',
+} as const;
+
 export {
   SearchParams,
   AppRoute,
@@ -94,5 +98,6 @@ export {
   PaginationInfo,
   TOTAL_COUNT_HEADER,
   MAX_GUITAR_COUNT,
-  DEFAULT_PAGE_PATH
+  DEFAULT_PAGE_PATH,
+  UNKNOWN_ACTION
 };

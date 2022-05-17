@@ -2,6 +2,7 @@ import {ThunkAction} from 'redux-thunk';
 import {Action} from 'redux';
 import {AxiosInstance} from 'axios';
 
+import {GeneratedParams} from './types';
 import {Guitars} from './guitar-types';
 import {rootReducer} from '../store/reducers/root-reducer';
 
@@ -16,7 +17,7 @@ type CatalogData = {
   isError: boolean,
 };
 
-type ProductgData = {
+type ProductData = {
   guitars: Guitars,
   foundGuitars: Guitars,
   guitarCount: number,
@@ -24,6 +25,7 @@ type ProductgData = {
 };
 
 type RootState = ReturnType<typeof rootReducer>;
+type RootStateIndex = keyof RootState;
 
 type ThunkActionResult<R = Promise<void>> = ThunkAction<
   R,
@@ -32,9 +34,15 @@ type ThunkActionResult<R = Promise<void>> = ThunkAction<
   Action
 >
 
+type RootStatePartial<T = CatalogData | ProductData | GeneratedParams> = {
+  [P in keyof T]?: T[P];
+};
+
 export type {
   CatalogData,
-  ProductgData,
+  ProductData,
   RootState,
-  ThunkActionResult
+  RootStateIndex,
+  ThunkActionResult,
+  RootStatePartial
 };

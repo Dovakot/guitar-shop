@@ -1,11 +1,10 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {generatePath} from 'react-router-dom';
 
-import {AppRoute, PageInfo} from '../../../../const';
+import {PageInfo, DEFAULT_PAGE_PATH} from '../../../../const';
 import {debouncedFetchGuitars} from '../../../../utils/utils';
-import {setCatalogPage} from '../../../../store/actions/actions';
 import {fetchGuitars} from '../../../../store/api-actions/api-actions';
+import {setGuitarCountParam} from '../../../../store/reducers/query-string-data/query-string-data';
 
 import PriceRange from './price-range/price-range';
 import GuitarTypeList from './guitar-type-list/guitar-type-list';
@@ -13,11 +12,10 @@ import GuitarStringList from './guitar-string-list/guitar-string-list';
 
 function Filters(): JSX.Element {
   const dispatch = useDispatch();
-  const pageLink = generatePath(AppRoute.Catalog, {page: PageInfo.DefaultPage});
 
   const getGuitarsForDefaultPage = async () => {
-    await dispatch(setCatalogPage(PageInfo.DefaultPage));
-    debouncedFetchGuitars(dispatch, fetchGuitars, undefined, pageLink);
+    await dispatch(setGuitarCountParam(PageInfo.DefaultPage));
+    debouncedFetchGuitars(dispatch, fetchGuitars, undefined, DEFAULT_PAGE_PATH);
   };
 
   return (

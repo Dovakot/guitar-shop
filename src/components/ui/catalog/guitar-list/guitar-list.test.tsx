@@ -6,24 +6,20 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import {MessageText} from '../../../../const';
 import {NameSpace} from '../../../../store/reducers/root-reducer';
 import {Guitars} from '../../../../types/guitar-types';
-import guitarInitialState from '../../../../store/reducers/guitar-data/guitar-initial-state';
 import {mockCatalogGuitars} from '../../../../mock/mock';
+import {getMockState} from '../../../../mock/store-mock';
 
 import GuitarList from './guitar-list';
 
 const mockStore = configureMockStore();
 
-const renderTestingComponent = (data: Guitars = [], isLoading = false) => {
-  const store = mockStore({
-    [NameSpace.Guitar]: {
-      ...guitarInitialState,
-      guitars: {
-        ...guitarInitialState.guitars,
-        data,
-        isLoading,
-      },
-    },
+const renderTestingComponent = (guitars: Guitars = [], isLoading = false) => {
+  const mockState = getMockState(NameSpace.Product, {
+    guitars,
+    isLoading,
   });
+
+  const store = mockStore(mockState);
 
   return render(
     <Provider store={store}>
