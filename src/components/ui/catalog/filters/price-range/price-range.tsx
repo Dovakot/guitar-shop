@@ -2,8 +2,9 @@ import React, {FocusEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {checkValue} from '../../../../../utils/filter-utils';
-import {setGuitarPriceMin, setGuitarPriceMax} from '../../../../../store/actions/actions';
-import {getDefaultGuitarPrice, getGuitarPrice} from '../../../../../store/reducers/guitar-data/selectors';
+import {getGuitarPrice} from '../../../../../store/reducers/catalog-data/selectors';
+import {getPriceParams} from '../../../../../store/reducers/query-string-data/selectors';
+import {setMinPriceParam, setMaxPriceParam} from '../../../../../store/reducers/query-string-data/query-string-data';
 
 import PriceField from './price-field/price-field';
 
@@ -13,8 +14,8 @@ type PriceRangeProps = {
 
 function PriceRange({getGuitarsForDefaultPage}: PriceRangeProps): JSX.Element {
   const dispatch = useDispatch();
-  const {defaultPriceMin, defaultPriceMax} = useSelector(getDefaultGuitarPrice);
-  const {minPrice, maxPrice} = useSelector(getGuitarPrice);
+  const {defaultMinPrice, defaultMaxPrice} = useSelector(getGuitarPrice);
+  const {minPrice: [minPrice], maxPrice: [maxPrice]} = useSelector(getPriceParams);
 
   const changeGuitarPrice = async (
     target: HTMLInputElement,
@@ -32,10 +33,10 @@ function PriceRange({getGuitarsForDefaultPage}: PriceRangeProps): JSX.Element {
   };
 
   const handleGuitarPriceMinBlur = ({target}: FocusEvent<HTMLInputElement>) =>
-    changeGuitarPrice(target, defaultPriceMin, minPrice, setGuitarPriceMin);
+    changeGuitarPrice(target, defaultMinPrice, minPrice, setMinPriceParam);
 
   const handleGuitarPriceMaxBlur = ({target}: FocusEvent<HTMLInputElement>) =>
-    changeGuitarPrice(target, defaultPriceMax, maxPrice, setGuitarPriceMax);
+    changeGuitarPrice(target, defaultMaxPrice, maxPrice, setMaxPriceParam);
 
   return (
     <div
@@ -49,9 +50,9 @@ function PriceRange({getGuitarsForDefaultPage}: PriceRangeProps): JSX.Element {
           id="priceMin"
           name="от"
           value={minPrice}
-          defaultValueMin={defaultPriceMin}
-          defaultValueMax={defaultPriceMax}
-          placeholder={defaultPriceMin}
+          defaultValueMin={defaultMinPrice}
+          defaultValueMax={defaultMaxPrice}
+          placeholder={defaultMinPrice}
           onFieldBlur={handleGuitarPriceMinBlur}
         />
       </div>
@@ -62,9 +63,9 @@ function PriceRange({getGuitarsForDefaultPage}: PriceRangeProps): JSX.Element {
           id="priceMax"
           name="до"
           value={maxPrice}
-          defaultValueMin={defaultPriceMin}
-          defaultValueMax={defaultPriceMax}
-          placeholder={defaultPriceMax}
+          defaultValueMin={defaultMinPrice}
+          defaultValueMax={defaultMaxPrice}
+          placeholder={defaultMaxPrice}
           onFieldBlur={handleGuitarPriceMaxBlur}
         />
       </div>

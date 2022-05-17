@@ -3,7 +3,6 @@ import {useDispatch} from 'react-redux';
 
 import {isDisabledCheckbox, isCheckedCheckbox} from '../../../../../utils/filter-utils';
 import {fetchGuitarPrice} from '../../../../../store/api-actions/api-actions';
-import {setGuitarTypes, setGuitarStrings} from '../../../../../store/actions/actions';
 
 type CheckboxProps = {
   name: string,
@@ -12,7 +11,7 @@ type CheckboxProps = {
   checkedGuitarAttr: string[],
   validatedGuitarAttr: string[],
   getGuitarsForDefaultPage: () => void,
-  isGuitarType?: boolean,
+  setValue: (a: string) => void,
 };
 
 function Checkbox({
@@ -22,7 +21,7 @@ function Checkbox({
   checkedGuitarAttr,
   validatedGuitarAttr,
   getGuitarsForDefaultPage,
-  isGuitarType,
+  setValue,
 }: CheckboxProps): JSX.Element {
   const dispatch = useDispatch();
 
@@ -30,9 +29,6 @@ function Checkbox({
   const isChecked = isCheckedCheckbox(isDisabled, checkedGuitarAttr, defaultValue);
 
   const handleCheckboxChange = async ({target}: ChangeEvent<HTMLInputElement>) => {
-    const setValue = (value: string) => isGuitarType ? dispatch(setGuitarTypes(value))
-      : dispatch(setGuitarStrings(value));
-
     await setValue(target.value);
     getGuitarsForDefaultPage();
     dispatch(fetchGuitarPrice());

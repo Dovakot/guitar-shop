@@ -4,9 +4,9 @@ import {useLocation, useParams} from 'react-router-dom';
 
 import {scrollToTop} from '../../../../utils/utils';
 import {getPaginationConfig} from '../../../../utils/pagination-utils';
-import {setCatalogPage} from '../../../../store/actions/actions';
 import {fetchGuitars} from '../../../../store/api-actions/api-actions';
-import {getCatalogPage} from '../../../../store/reducers/guitar-data/selectors';
+import {setGuitarCountParam} from '../../../../store/reducers/query-string-data/query-string-data';
+import {getCatalogPages} from '../../../../store/reducers/catalog-data/selectors';
 
 import PaginationItem from './pagination-item/pagination-item';
 
@@ -20,13 +20,13 @@ type PaginationChangedItem = {
 function Pagination(): JSX.Element {
   const dispatch = useDispatch();
   const currentPage = +useParams<{page: string}>().page;
-  const pages = useSelector(getCatalogPage);
+  const pages = useSelector(getCatalogPages);
   const {pathname} = useLocation();
 
   const paginationConfig = getPaginationConfig(pages);
 
   const handlePaginationLinkClick = async (page: number, link: string) => {
-    await dispatch(setCatalogPage(page));
+    await dispatch(setGuitarCountParam(page));
     dispatch(fetchGuitars(undefined, link));
 
     scrollToTop();

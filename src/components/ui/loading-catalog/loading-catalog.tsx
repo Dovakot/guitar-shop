@@ -6,7 +6,8 @@ import './loading-catalog.css';
 
 import {MessageText} from '../../../const';
 import {fetchGuitars, fetchGuitarPrice} from '../../../store/api-actions/api-actions';
-import {setStatusIsLoading, setOptions} from '../../../store/actions/actions';
+import {isLoadingCatalog} from '../../../store/reducers/catalog-data/catalog-data';
+import {setDefaultParams} from '../../../store/reducers/query-string-data/query-string-data';
 
 import Spinner from '../spinner/spinner';
 
@@ -19,10 +20,10 @@ function LoadingCatalog({isError}: LoadingProps): JSX.Element {
   const {search} = useLocation();
 
   useEffect(() => {
-    const setStatusApp = (flag: boolean) => dispatch(setStatusIsLoading(flag));
+    const setStatusApp = (flag: boolean) => dispatch(isLoadingCatalog(flag));
 
     (async () => {
-      await dispatch(setOptions(search));
+      await dispatch(setDefaultParams(search));
 
       try {
         await dispatch(fetchGuitars());

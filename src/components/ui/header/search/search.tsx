@@ -2,8 +2,8 @@ import React, {ChangeEvent, FocusEvent, useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {debouncedFindGuitars} from '../../../../utils/utils';
-import {getFoundGuitars} from '../../../../store/reducers/guitar-data/selectors';
-import {searchGuitars} from '../../../../store/actions/actions';
+import {resetFoundGuitars} from '../../../../store/reducers/product-data/product-data';
+import {getFoundGuitars} from '../../../../store/reducers/product-data/selectors';
 import {fetchFoundGuitars} from '../../../../store/api-actions/api-actions';
 
 import SearchList from './search-list/search-list';
@@ -11,7 +11,7 @@ import SearchField from './search-field/search-field';
 
 function Search(): JSX.Element {
   const dispatch = useDispatch();
-  const {guitars, guitarCount} = useSelector(getFoundGuitars);
+  const {foundGuitars, guitarCount} = useSelector(getFoundGuitars);
   const [fieldValue, setFieldValue] = useState('');
 
   const handleFormChange = ({target}: ChangeEvent<HTMLFormElement>) => {
@@ -19,14 +19,14 @@ function Search(): JSX.Element {
     const truncValue = value.trim();
 
     setFieldValue(truncValue);
-    debouncedFindGuitars(dispatch, fetchFoundGuitars, searchGuitars, truncValue);
+    debouncedFindGuitars(dispatch, fetchFoundGuitars, resetFoundGuitars, truncValue);
   };
 
   const handleSearchBlur = ({currentTarget, relatedTarget}: FocusEvent<Element | Node>) => !currentTarget
-    .contains(relatedTarget) && dispatch(searchGuitars());
+    .contains(relatedTarget) && dispatch(resetFoundGuitars());
 
   useEffect(() => () => {
-    dispatch(searchGuitars());
+    dispatch(resetFoundGuitars());
     setFieldValue('');
   }, [dispatch]);
 
@@ -50,7 +50,7 @@ function Search(): JSX.Element {
         <SearchField fieldValue={fieldValue} />
       </form>
 
-      {guitarCount ? <SearchList guitars={guitars} /> : ''}
+      {guitarCount ? <SearchList guitars={foundGuitars} /> : ''}
     </div>
   );
 }

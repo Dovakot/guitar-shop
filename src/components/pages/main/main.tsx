@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {resetMainPageData} from '../../../store/actions/actions';
-import {getStatusIsLoading} from '../../../store/reducers/guitar-data/selectors';
+import {resetCatalogData} from '../../../store/reducers/catalog-data/catalog-data';
+import {getIsLoadingCatalog} from '../../../store/reducers/catalog-data/selectors';
 
 import BasePage from '../../base-page/base-page';
 import Catalog from '../../ui/catalog/catalog';
@@ -14,13 +14,13 @@ type MainProps = {
 
 function Main({isBreadcrumbs}: MainProps): JSX.Element {
   const dispatch = useDispatch();
-  const {isLoading, isError} = useSelector(getStatusIsLoading);
+  const {isLoading, isError} = useSelector(getIsLoadingCatalog);
 
   useEffect(() => {
-    const resetPageData = async () => await dispatch(resetMainPageData());
+    const resetMainPage = async () => await dispatch(resetCatalogData());
 
     return () => {
-      resetPageData();
+      resetMainPage();
     };
   }, [dispatch]);
 

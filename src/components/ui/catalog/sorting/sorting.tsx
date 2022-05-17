@@ -5,22 +5,21 @@ import './sorting.css';
 
 import {SortType} from '../../../../const';
 import {debouncedFetchGuitars} from '../../../../utils/utils';
-import {setSortTypes} from '../../../../store/actions/actions';
+import {getSortParams} from '../../../../store/reducers/query-string-data/selectors';
+import {setSortParams} from '../../../../store/reducers/query-string-data/query-string-data';
 import {fetchGuitars} from '../../../../store/api-actions/api-actions';
-import {getSortType, getSortOrder} from '../../../../store/reducers/guitar-data/selectors';
 
 import SortTypeButton from './sort-type-button/sort-type-button';
 import SortOrderButton from './sort-order-button/sort-order-button';
 
 function Sorting(): JSX.Element {
   const dispatch = useDispatch();
-  const [sortType] = useSelector(getSortType);
-  const [sortOrder] = useSelector(getSortOrder);
+  const {sortType: [sortType], sortOrder: [sortOrder]} = useSelector(getSortParams);
 
   const sortGuitars = (type: string, order: string) => {
     const currentValue = {sortType: [type], sortOrder: [order]};
 
-    dispatch(setSortTypes(currentValue));
+    dispatch(setSortParams(currentValue));
     debouncedFetchGuitars(dispatch, fetchGuitars, currentValue);
   };
 

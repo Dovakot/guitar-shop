@@ -5,7 +5,7 @@ import './guitar-list.css';
 
 import {MessageText} from '../../../../const';
 import {GuitarCard, Guitars} from '../../../../types/guitar-types';
-import {getGuitars} from '../../../../store/reducers/guitar-data/selectors';
+import {getGuitars} from '../../../../store/reducers/product-data/selectors';
 
 import SmallGuitarCard from './small-guitar-card/small-guitar-card';
 
@@ -20,14 +20,14 @@ const getGuitarList = (guitars: Guitars) => guitars.length ? guitars.map(getSmal
   : MessageText.NotFound;
 
 function GuitarList(): JSX.Element {
-  const {data, isLoading} = useSelector(getGuitars);
+  const {guitars, isLoading} = useSelector(getGuitars);
 
   return (
     <div
       className="cards catalog__cards"
       data-testid="catalog-cards"
     >
-      {isLoading ? MessageText.Loading : getGuitarList(data)}
+      {isLoading ? MessageText.Loading : getGuitarList(guitars)}
     </div>
   );
 }

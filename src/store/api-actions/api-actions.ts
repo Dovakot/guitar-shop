@@ -2,14 +2,21 @@ import {toast} from 'react-toastify';
 
 import {MessageText, ApiRoute, SortType, TOTAL_COUNT_HEADER, MAX_GUITAR_COUNT} from '../../const';
 import {replaceGuitarPriceParams, getUrlToQuery, getLocation} from '../../utils/query-utils';
+import {NameSpace} from '../reducers/root-reducer';
 import {ThunkActionResult} from '../../types/store-types';
 import {GeneratedParams} from '../../types/types';
-import {loadGuitars, searchGuitars, setDefaultGuitarPrices, redirect, isLoadingGuitars} from '../actions/actions';
+import {redirect} from '../actions/actions';
+import {loadGuitars, searchGuitars, isLoadingGuitars} from '../reducers/product-data/product-data';
+import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
 
 const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {options, isLoading} = _getState().GUITAR;
-    const url = getUrlToQuery({...options, ...currentValue});
+    const {
+      [NameSpace.QueryString]: params,
+      [NameSpace.Catalog]: {isLoading},
+    } = _getState();
+
+    const url = getUrlToQuery({...params, ...currentValue});
     const location = getLocation(url, currentLocation);
 
     if (!isLoading) {
@@ -21,7 +28,8 @@ const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string):
       const {data, headers} = await api.get(`${ApiRoute.Guitars}?_limit=${MAX_GUITAR_COUNT}&_embed=comments${url}`);
 
       dispatch(isLoadingGuitars(false));
-      dispatch(loadGuitars(data, +headers[TOTAL_COUNT_HEADER]));
+      dispatch(loadGuitars(data));
+      dispatch(setCatalogPages(+headers[TOTAL_COUNT_HEADER]));
     } catch(error) {
       dispatch(isLoadingGuitars(false));
       toast.error(MessageText.Error);
@@ -32,13 +40,14 @@ const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string):
 
 const fetchGuitarPrice = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
-    const {options} = _getState().GUITAR;
+    const {[NameSpace.QueryString]: params} = _getState();
+
     const urlMinPrice = getUrlToQuery({
-      ...options,
+      ...params,
       ...replaceGuitarPriceParams(SortType.Up),
     });
     const urlMaxPrice = getUrlToQuery({
-      ...options,
+      ...params,
       ...replaceGuitarPriceParams(SortType.Down),
     });
 
@@ -46,7 +55,7 @@ const fetchGuitarPrice = (): ThunkActionResult =>
       const {data: [minData]} = await api.get(`${ApiRoute.Guitars}?_limit=1${urlMinPrice}`);
       const {data: [maxData]} = await api.get(`${ApiRoute.Guitars}?_limit=1${urlMaxPrice}`);
 
-      dispatch(setDefaultGuitarPrices(minData.price, maxData.price));
+      dispatch(setDefaultPriceFilter({minPrice: minData.price, maxPrice: maxData.price}));
     } catch(error) {
       toast.error(MessageText.PriceError);
     }

@@ -1,8 +1,8 @@
 import {
-  getDefaultOptionsToStore
+  getDefaultSearchParamsToStore
 } from '../../../utils/query-utils';
 
-const OPTIONS_DATA_DEFAULT = getDefaultOptionsToStore();
+const OPTIONS_DATA_DEFAULT = getDefaultSearchParamsToStore();
 
 const guitarInitialState = {
   guitars: {

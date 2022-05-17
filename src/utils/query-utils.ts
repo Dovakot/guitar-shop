@@ -21,7 +21,7 @@ const replaceGuitarPriceParams = (orderType: string) => ({
 
 const getSearchParamValues = (search: string, name: string) => new URLSearchParams(search).getAll(name);
 
-const getDefaultOptionsToStore = () => Object.entries(queryСonfig)
+const getDefaultSearchParamsToStore = () => Object.entries(queryСonfig)
   .reduce((params: GeneratedParams, [key]) => {
     params[key] = [];
 
@@ -55,7 +55,7 @@ const getLocation = (params: string, pathname?: string) => {
 
 export {
   replaceGuitarPriceParams,
-  getDefaultOptionsToStore,
+  getDefaultSearchParamsToStore,
   adaptSearchParamsToStore,
   getUrlToQuery,
   getLocation

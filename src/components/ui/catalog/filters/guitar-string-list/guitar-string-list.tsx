@@ -1,8 +1,12 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {GuitarString} from '../../../../../const';
-import {getGuitarStrings, getValidatedGuitarStrings} from '../../../../../store/reducers/guitar-data/selectors';
+import {filterGuitarAttr} from '../../../../../utils/filter-utils';
+import {getFilterParams} from '../../../../../store/reducers/query-string-data/selectors';
+import {getValidatedFilterValues} from '../../../../../store/reducers/catalog-data/selectors';
+import {setGuitarStringsParam} from '../../../../../store/reducers/query-string-data/query-string-data';
+import {setGuitarTypesFilter} from '../../../../../store/reducers/catalog-data/catalog-data';
 
 import Checkbox from '../checkbox/checkbox';
 
@@ -13,8 +17,15 @@ type GuitarStringListProps = {
 const guitarStrings = Object.values(GuitarString);
 
 function GuitarStringList({getGuitarsForDefaultPage}: GuitarStringListProps): JSX.Element {
-  const checkedGuitarStrings = useSelector(getGuitarStrings);
-  const validatedGuitarStrings = useSelector(getValidatedGuitarStrings);
+  const dispatch = useDispatch();
+  const {checkedGuitarStrings} = useSelector(getFilterParams);
+  const {validatedGuitarStrings} = useSelector(getValidatedFilterValues);
+
+  const setGuitarStrings = (value: string) => {
+    const stringsParam = filterGuitarAttr(checkedGuitarStrings, value);
+
+    dispatch(setGuitarStringsParam(stringsParam));
+  };
 
   const getCheckboxItem = (type: string) => {
     const label = `${type}-strings`;
@@ -28,9 +39,14 @@ function GuitarStringList({getGuitarsForDefaultPage}: GuitarStringListProps): JS
         checkedGuitarAttr={checkedGuitarStrings}
         validatedGuitarAttr={validatedGuitarStrings}
         getGuitarsForDefaultPage={getGuitarsForDefaultPage}
+        setValue={setGuitarStrings}
       />
     );
   };
+
+  useEffect(() => {
+    dispatch(setGuitarTypesFilter(checkedGuitarStrings));
+  }, [dispatch, checkedGuitarStrings]);
 
   return (
     <>

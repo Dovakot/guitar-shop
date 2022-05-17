@@ -21,6 +21,7 @@ describe('Checkbox component', () => {
           checkedGuitarAttr={[]}
           validatedGuitarAttr={[]}
           getGuitarsForDefaultPage={jest.fn()}
+          setValue={jest.fn()}
         />
       </Provider>,
     );
