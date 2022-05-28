@@ -3,7 +3,7 @@ import {Action} from 'redux';
 import {AxiosInstance} from 'axios';
 
 import {GeneratedParams} from './types';
-import {Guitars} from './guitar-types';
+import {Guitars, Guitar} from './guitar-types';
 import {rootReducer} from '../store/reducers/root-reducer';
 
 type CatalogData = {
@@ -18,6 +18,12 @@ type CatalogData = {
 };
 
 type ProductData = {
+  guitar: {
+    name: string,
+    data: Guitar,
+    isError: boolean,
+    isLoading: boolean,
+  },
   guitars: Guitars,
   foundGuitars: Guitars,
   guitarCount: number,

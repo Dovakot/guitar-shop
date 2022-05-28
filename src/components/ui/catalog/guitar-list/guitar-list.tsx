@@ -4,12 +4,12 @@ import {useSelector} from 'react-redux';
 import './guitar-list.css';
 
 import {MessageText} from '../../../../const';
-import {GuitarCard, Guitars} from '../../../../types/guitar-types';
+import {Guitar, Guitars} from '../../../../types/guitar-types';
 import {getGuitars} from '../../../../store/reducers/product-data/selectors';
 
 import SmallGuitarCard from './small-guitar-card/small-guitar-card';
 
-const getSmallGuitarCard = (guitar: GuitarCard) => (
+const getSmallGuitarCard = (guitar: Guitar) => (
   <SmallGuitarCard
     key={guitar.id}
     {...guitar}

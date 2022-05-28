@@ -2,7 +2,13 @@ import {datatype, lorem, name, image} from 'faker';
 
 import {MAX_GUITAR_COUNT, SortType, GuitarType, GuitarString, PageInfo} from '../const';
 import {createArrayOfObjects} from '../utils/utils';
-import {GuitarComment, GuitarCard} from '../types/guitar-types';
+import {GuitarComment, Guitar} from '../types/guitar-types';
+import {IconSize} from '../types/types';
+
+const mockIconSize:IconSize = {
+  width: 10,
+  height: 10,
+};
 
 const createMockComment = (): GuitarComment => ({
   id: datatype.uuid(),
@@ -15,7 +21,7 @@ const createMockComment = (): GuitarComment => ({
   guitarId: datatype.number(),
 });
 
-const createMockGuitar = (): GuitarCard => ({
+const createMockGuitar = (): Guitar => ({
   id: datatype.number(),
   name: name.title(),
   vendorCode: lorem.word(),
@@ -45,6 +51,7 @@ const mockDefaultPrices = {minPrice: mockPriceMin, maxPrice: mockPriceMax};
 const mockCatalogPage = PageInfo.MaxPage;
 
 export {
+  mockIconSize,
   mockGuitar,
   mockCatalogGuitars,
   mockTotalCount,

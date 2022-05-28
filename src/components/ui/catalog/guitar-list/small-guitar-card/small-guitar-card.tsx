@@ -1,9 +1,17 @@
 import React from 'react';
+import {Link, generatePath} from 'react-router-dom';
 
+import {AppRoute} from '../../../../../const';
 import {formatPrice} from '../../../../../utils/utils';
-import {GuitarCard} from '../../../../../types/guitar-types';
+import {IconSize} from '../../../../../types/types';
+import {Guitar} from '../../../../../types/guitar-types';
 
 import Rating from '../../../rating/rating';
+
+const iconSize:IconSize = {
+  width: 12,
+  height: 11,
+};
 
 function SmallGuitarCard({
   id,
@@ -13,7 +21,8 @@ function SmallGuitarCard({
   rating,
   price,
   comments,
-}: GuitarCard): JSX.Element {
+}: Guitar): JSX.Element {
+  const pathToGuitar = generatePath(AppRoute.Guitar, {id});
   const formattedPrice = formatPrice(price);
   const commentCount = comments.length;
 
@@ -33,6 +42,7 @@ function SmallGuitarCard({
           rating={rating}
           comments={commentCount}
           className="product-card__rate"
+          iconSize={iconSize}
         />
 
         <p className="product-card__title">{name}</p>
@@ -42,7 +52,12 @@ function SmallGuitarCard({
         </p>
       </div>
       <div className="product-card__buttons">
-        <a className="button button--mini" href="#top">Подробнее</a>
+        <Link
+          className="button button--mini"
+          to={pathToGuitar}
+        >
+          Подробнее
+        </Link>
         <a className="button button--red button--mini button--add-to-cart" href="#top">Купить</a>
       </div>
     </div>

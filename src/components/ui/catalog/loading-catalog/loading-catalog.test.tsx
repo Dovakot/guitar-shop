@@ -4,8 +4,8 @@ import {render, screen} from '@testing-library/react';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import thunk from 'redux-thunk';
 
-import {MessageText} from '../../../const';
-import {mockInitialState} from '../../../mock/store-mock';
+import {MessageText} from '../../../../const';
+import {mockInitialState} from '../../../../mock/store-mock';
 
 import LoadingCatalog from './loading-catalog';
 

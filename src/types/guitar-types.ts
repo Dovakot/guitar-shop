@@ -9,7 +9,7 @@ type GuitarComment = {
   guitarId: number
 };
 
-type GuitarCard = {
+type Guitar = {
   id: number,
   name: string,
   vendorCode: string,
@@ -22,10 +22,10 @@ type GuitarCard = {
   comments: GuitarComment[],
 };
 
-type Guitars = GuitarCard[];
+type Guitars = Guitar[];
 
 export type {
   GuitarComment,
-  GuitarCard,
+  Guitar,
   Guitars
 };

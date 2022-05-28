@@ -6,8 +6,21 @@ import {NameSpace} from '../reducers/root-reducer';
 import {ThunkActionResult} from '../../types/store-types';
 import {GeneratedParams} from '../../types/types';
 import {redirect} from '../actions/actions';
-import {loadGuitars, searchGuitars, isLoadingGuitars} from '../reducers/product-data/product-data';
+import {loadGuitars, setGuitarName, loadGuitar, searchGuitars, isLoadingGuitars} from '../reducers/product-data/product-data';
 import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
+
+const fetchGuitar = (id: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    try {
+      const {data} = await api.get(`${ApiRoute.Guitars}/${id}`);
+
+      dispatch(loadGuitar({data, isError: false}));
+      dispatch(setGuitarName(data.name));
+    } catch(error) {
+      dispatch(loadGuitar({data: {}, isError: true}));
+      toast.error(MessageText.Error);
+    }
+  };
 
 const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -73,6 +86,7 @@ const fetchFoundGuitars = (name: string): ThunkActionResult =>
   };
 
 export {
+  fetchGuitar,
   fetchGuitars,
   fetchGuitarPrice,
   fetchFoundGuitars

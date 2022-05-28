@@ -8,6 +8,7 @@ import browserHistory from '../../browser-history';
 
 import BasePage from '../base-page/base-page';
 import Main from '../pages/main/main';
+import Product from '../pages/product/product';
 import NotFound from '../pages/not-found/not-found';
 
 function App(): JSX.Element {
@@ -20,11 +21,11 @@ function App(): JSX.Element {
           </Route>
 
           <Route path={AppRoute.Catalog} exact>
-            <Main isBreadcrumbs />
+            <Main />
           </Route>
 
           <Route path={AppRoute.Guitar} exact>
-            <BasePage title="Ваша гитара" />
+            <Product />
           </Route>
 
           <Route path={AppRoute.Cart} exact>

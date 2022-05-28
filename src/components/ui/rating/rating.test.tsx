@@ -1,5 +1,7 @@
 import {render, screen} from '@testing-library/react';
 
+import {mockIconSize} from '../../../mock/mock';
+
 import Rating from './rating';
 
 describe('Rating component', () => {
@@ -8,6 +10,7 @@ describe('Rating component', () => {
       <Rating
         rating={4}
         comments={0}
+        iconSize={mockIconSize}
         className="product-card__rate"
       />,
     );

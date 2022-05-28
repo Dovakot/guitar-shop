@@ -6,13 +6,9 @@ import {getIsLoadingCatalog} from '../../../store/reducers/catalog-data/selector
 
 import BasePage from '../../base-page/base-page';
 import Catalog from '../../ui/catalog/catalog';
-import LoadingCatalog from '../../ui/loading-catalog/loading-catalog';
+import LoadingCatalog from '../../ui/catalog/loading-catalog/loading-catalog';
 
-type MainProps = {
-  isBreadcrumbs?: boolean;
-};
-
-function Main({isBreadcrumbs}: MainProps): JSX.Element {
+function Main(): JSX.Element {
   const dispatch = useDispatch();
   const {isLoading, isError} = useSelector(getIsLoadingCatalog);
 
@@ -25,7 +21,7 @@ function Main({isBreadcrumbs}: MainProps): JSX.Element {
   }, [dispatch]);
 
   return (
-    <BasePage title="Каталог гитар" isBreadcrumbs>
+    <BasePage title="Каталог гитар">
       {isLoading
         ? <LoadingCatalog isError={isError} />
         : <Catalog />}

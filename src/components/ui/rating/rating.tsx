@@ -1,42 +1,45 @@
 import React from 'react';
 import cn from 'classnames';
 
+import {IconSize} from '../../../types/types';
+
 import SvgIcon from '../svg-icon/svg-icon';
 
 type RatingProps = {
   rating: number,
-  comments: number,
+  comments?: number,
   className: string,
+  iconSize: IconSize,
 };
 
 const MAX_STAR_COUNT = 5;
 const allStars = [...Array(MAX_STAR_COUNT)];
 
-const getIconConfig = (index: number, rating: number) => {
+const getIconConfig = (index: number, rating: number, icon: IconSize) => {
   const starCount = Math.trunc(rating);
   const type = index < starCount ? '-full-' : '-';
 
   return {
     id: `icon${type}star`,
-    width: 12,
-    height: 11,
+    width: icon.width,
+    height: icon.height,
   };
 };
 
-function Rating({rating, comments, className}: RatingProps): JSX.Element {
+function Rating({rating, comments, className, iconSize}: RatingProps): JSX.Element {
   const rateClass = cn('rate', {
     [className]: true,
   });
 
   const getStar = (star: undefined, index: number) => {
     const key = `star-${index}`;
-    const iconOption = getIconConfig(index, rating);
-    const {id} = iconOption;
+    const iconConfig = getIconConfig(index, rating, iconSize);
+    const {id} = iconConfig;
 
     return (
       <SvgIcon
         key={key}
-        icon={iconOption}
+        icon={iconConfig}
         testId={id}
       />
     );

@@ -1,7 +1,6 @@
 type Page = {
   children?: React.ReactNode,
   title: string,
-  isBreadcrumbs?: boolean,
 };
 
 type NavItem = {
@@ -14,8 +13,14 @@ type GeneratedParams = {
   [key: string]: string[];
 };
 
+type IconSize = {
+  width: number,
+  height: number,
+};
+
 export type {
   Page,
   NavItem,
-  GeneratedParams
+  GeneratedParams,
+  IconSize
 };

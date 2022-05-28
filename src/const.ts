@@ -21,6 +21,7 @@ enum ApiRoute {
 enum NavLinkTitle {
   Root = 'Главная',
   Catalog = 'Каталог',
+  Guitar = 'Товар',
   Stores = 'Где купить?',
   About = 'О компании',
   Blog = 'Блог',
