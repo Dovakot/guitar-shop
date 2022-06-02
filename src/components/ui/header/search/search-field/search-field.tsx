@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
 type SearchFieldProps = {
   fieldValue: string,
+  onInputChange: (a: ChangeEvent<HTMLInputElement>) => void;
 };
 
-function SearchField({fieldValue}: SearchFieldProps): JSX.Element {
+function SearchField({fieldValue, onInputChange}: SearchFieldProps): JSX.Element {
   return (
     <>
       <input
@@ -13,7 +14,8 @@ function SearchField({fieldValue}: SearchFieldProps): JSX.Element {
         type="text"
         autoComplete="off"
         placeholder="что вы ищите?"
-        defaultValue={fieldValue}
+        value={fieldValue}
+        onChange={onInputChange}
         data-testid="search"
       />
       <label className="visually-hidden" htmlFor="search">Поиск</label>
