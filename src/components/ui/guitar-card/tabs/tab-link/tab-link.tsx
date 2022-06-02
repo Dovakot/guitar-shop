@@ -25,7 +25,7 @@ function TabLink({id, label, activeTab, onActiveTabChange}: TabLinkProps): JSX.E
     },
   );
 
-  const onLinkClick = (evt: MouseEvent<HTMLElement>) => {
+  const handleLinkClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
     onActiveTabChange(label);
@@ -35,7 +35,8 @@ function TabLink({id, label, activeTab, onActiveTabChange}: TabLinkProps): JSX.E
     <Link
       className={linkClass}
       to={tabLink}
-      onClick={onLinkClick}
+      onClick={handleLinkClick}
+      data-testid="tab-link"
     >
       {label}
     </Link>

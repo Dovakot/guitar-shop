@@ -3,12 +3,15 @@ import productInitialState from './product-initial-state';
 
 import productData, {
   loadGuitars,
+  loadGuitar,
+  setGuitarName,
   searchGuitars,
   resetFoundGuitars,
   isLoadingGuitars
 } from './product-data';
 
 import {
+  mockGuitar,
   mockCatalogGuitars
 } from '../../../mock/mock';
 
@@ -23,6 +26,32 @@ describe('Reducer: Product', () => {
     ).toEqual({
       ...productInitialState,
       guitars: mockCatalogGuitars,
+    });
+  });
+
+  it('should load guitar data', () => {
+    expect(
+      productData(productInitialState, loadGuitar({data: mockGuitar, isError: false})),
+    ).toEqual({
+      ...productInitialState,
+      guitar: {
+        ...productInitialState.guitar,
+        data: mockGuitar,
+        isLoading: false,
+        isError: false,
+      },
+    });
+  });
+
+  it('should set guitar name', () => {
+    expect(
+      productData(productInitialState, setGuitarName(mockGuitar.name)),
+    ).toEqual({
+      ...productInitialState,
+      guitar: {
+        ...productInitialState.guitar,
+        name: mockGuitar.name,
+      },
     });
   });
 

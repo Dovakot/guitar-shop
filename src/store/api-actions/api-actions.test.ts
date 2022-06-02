@@ -4,15 +4,39 @@ import {ThunkDispatch} from '@reduxjs/toolkit';
 import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 
-import {ApiRoute, TOTAL_COUNT_HEADER, MAX_GUITAR_COUNT} from '../../const';
-import {mockCatalogGuitars, mockTotalCount} from '../../mock/mock';
+import {ApiRoute, TOTAL_COUNT_HEADER, MAX_GUITAR_COUNT, MAX_REVIEW_COUNT} from '../../const';
+import {replaceGuitarReviewParams, getUrlToQuery} from '../../utils/query-utils';
 import createApi from '../../services/api';
 import {RootState} from '../../types/store-types';
-import {fetchGuitars, fetchGuitarPrice, fetchFoundGuitars} from './api-actions';
-import {loadGuitars, searchGuitars, isLoadingGuitars} from '../reducers/product-data/product-data';
-import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
-
 import {mockInitialState} from '../../mock/store-mock';
+import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
+import {loadGuitarReviews, addGuitarReview} from '../reducers/review-data/review-data';
+import queryStringInitialState from '../reducers/query-string-data/query-string-initial-state';
+
+import {
+  mockCatalogGuitars,
+  mockTotalCount,
+  mockGuitar,
+  mockMaxComments,
+  mockCommentCount
+} from '../../mock/mock';
+
+import {
+  fetchGuitars,
+  fetchGuitarPrice,
+  fetchFoundGuitars,
+  fetchGuitar,
+  fetchGuitarReviews,
+  sendGuitarReview
+} from './api-actions';
+
+import {
+  loadGuitars,
+  searchGuitars,
+  isLoadingGuitars,
+  setGuitarName,
+  loadGuitar
+} from '../reducers/product-data/product-data';
 
 const STATUS_OK = 200;
 
@@ -73,6 +97,51 @@ describe('Api-actions', () => {
     expect(store.getActions())
       .toEqual([
         searchGuitars(mockCatalogGuitars),
+      ]);
+  });
+
+  it('should fetch guitar', async () => {
+    const store = mockStore(mockInitialState);
+
+    mockApi.onGet(`${ApiRoute.Guitars}/${mockGuitar.id}`).reply(STATUS_OK, mockGuitar);
+
+    await store.dispatch(fetchGuitar(mockGuitar.id.toString()));
+
+    expect(store.getActions())
+      .toEqual([
+        loadGuitar({data: mockGuitar, isError: false}),
+        setGuitarName(mockGuitar.name),
+      ]);
+  });
+
+  it('should fetch guitar reviews', async () => {
+    const store = mockStore(mockInitialState);
+    const url = getUrlToQuery({...queryStringInitialState, ...replaceGuitarReviewParams(0)});
+
+    mockApi.onGet(`${ApiRoute.Guitars}/${mockGuitar.id}/${ApiRoute.Comments}?_limit=${MAX_REVIEW_COUNT}${url}`)
+      .reply(STATUS_OK, mockMaxComments, {
+        [TOTAL_COUNT_HEADER]: mockCommentCount,
+      });
+
+    await store.dispatch(fetchGuitarReviews(mockGuitar.id));
+
+    expect(store.getActions())
+      .toEqual([
+        loadGuitarReviews({data: mockMaxComments, totalCount: mockCommentCount}),
+      ]);
+  });
+
+  it('should send guitar review', async () => {
+    const store = mockStore(mockInitialState);
+    const [comment] = mockMaxComments;
+
+    mockApi.onPost(ApiRoute.Comments).reply(STATUS_OK, comment);
+
+    await store.dispatch(sendGuitarReview(comment));
+
+    expect(store.getActions())
+      .toEqual([
+        addGuitarReview(comment),
       ]);
   });
 });
