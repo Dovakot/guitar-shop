@@ -2,8 +2,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import {fetchGuitar} from '../../../store/api-actions/api-actions';
+import {fetchGuitar, fetchGuitarReviews} from '../../../store/api-actions/api-actions';
 import {resetGuitar} from '../../../store/reducers/product-data/product-data';
+import {resetGuitarReviews} from '../../../store/reducers/review-data/review-data';
 import {getGuitar, getGuitarName} from '../../../store/reducers/product-data/selectors';
 
 import BasePage from '../../base-page/base-page';
@@ -17,9 +18,15 @@ function Product(): JSX.Element {
   const title = useSelector(getGuitarName);
 
   useEffect(() => {
-    const resetGuitarPage = async () => await dispatch(resetGuitar());
+    const resetGuitarPage = async () => {
+      await dispatch(resetGuitar());
+      dispatch(resetGuitarReviews());
+    };
 
-    dispatch(fetchGuitar(id));
+    (async () => {
+      await dispatch(fetchGuitar(id));
+      dispatch(fetchGuitarReviews(id));
+    })();
 
     return () => {
       resetGuitarPage();

@@ -1,9 +1,11 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 import {formatPrice} from '../../../utils/utils';
 import {Guitar} from '../../../types/guitar-types';
 import {IconSize} from '../../../types/types';
+import {getGuitarReviews} from '../../../store/reducers/review-data/selectors';
 
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import Rating from '../rating/rating';
@@ -11,6 +13,7 @@ import Tabs from './tabs/tabs';
 import TabItem from './tabs/tab-item/tab-item';
 import Features from './features/features';
 import Description from './description/description';
+import Reviews from './reviews/reviews';
 
 const iconSize:IconSize = {
   width: 14,
@@ -35,6 +38,7 @@ function GuitarCard({
   price,
 }: Guitar): JSX.Element {
   const {pathname} = useLocation();
+  const {totalCount} = useSelector(getGuitarReviews);
 
   const formattedPrice = formatPrice(price);
   const breadcrumbsItem = getBreadcrumbsItem(name, pathname);
@@ -59,6 +63,7 @@ function GuitarCard({
 
           <Rating
             rating={rating}
+            comments={totalCount}
             className="product-container__rating"
             iconSize={iconSize}
           />
@@ -85,6 +90,11 @@ function GuitarCard({
           <a className="button button--red button--big product-container__button" href="#top">Добавить в корзину</a>
         </div>
       </div>
+
+      <Reviews
+        guitarId={id}
+        guitarName={name}
+      />
     </>
   );
 }

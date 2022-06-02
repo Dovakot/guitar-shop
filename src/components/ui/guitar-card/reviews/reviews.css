@@ -1,0 +1,7 @@
+.reviews__up-button {
+  z-index: 1;
+}
+
+.reviews__more-button:disabled {
+  opacity: 0.6;
+}

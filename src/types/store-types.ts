@@ -3,7 +3,7 @@ import {Action} from 'redux';
 import {AxiosInstance} from 'axios';
 
 import {GeneratedParams} from './types';
-import {Guitars, Guitar} from './guitar-types';
+import {Guitars, Guitar, GuitarComments} from './guitar-types';
 import {rootReducer} from '../store/reducers/root-reducer';
 
 type CatalogData = {
@@ -30,6 +30,14 @@ type ProductData = {
   isLoading: boolean,
 };
 
+type ReviewData = {
+  reviews: GuitarComments,
+  shownReviews: GuitarComments,
+  totalCount: number,
+  count: number,
+  isLoading: boolean,
+};
+
 type RootState = ReturnType<typeof rootReducer>;
 type RootStateIndex = keyof RootState;
 
@@ -40,13 +48,14 @@ type ThunkActionResult<R = Promise<void>> = ThunkAction<
   Action
 >
 
-type RootStatePartial<T = CatalogData | ProductData | GeneratedParams> = {
+type RootStatePartial<T = CatalogData | ProductData | GeneratedParams | ReviewData> = {
   [P in keyof T]?: T[P];
 };
 
 export type {
   CatalogData,
   ProductData,
+  ReviewData,
   RootState,
   RootStateIndex,
   ThunkActionResult,

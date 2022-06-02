@@ -19,6 +19,12 @@ const replaceGuitarPriceParams = (orderType: string) => ({
   sortOrder: [orderType],
 });
 
+const replaceGuitarReviewParams = (start: number) => ({
+  sortType: [SortType.Date],
+  sortOrder: [SortType.Down],
+  guitarsFrom: [start.toString()],
+});
+
 const getSearchParamValues = (search: string, name: string) => new URLSearchParams(search).getAll(name);
 
 const getDefaultSearchParamsToStore = () => Object.entries(queryСonfig)
@@ -55,6 +61,7 @@ const getLocation = (params: string, pathname?: string) => {
 
 export {
   replaceGuitarPriceParams,
+  replaceGuitarReviewParams,
   getDefaultSearchParamsToStore,
   adaptSearchParamsToStore,
   getUrlToQuery,

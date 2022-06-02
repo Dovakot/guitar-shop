@@ -6,8 +6,10 @@ type GuitarComment = {
   comment: string,
   rating: number,
   createAt: string,
-  guitarId: number
+  guitarId: number,
 };
+
+type GuitarComments = GuitarComment[];
 
 type Guitar = {
   id: number,
@@ -19,13 +21,14 @@ type Guitar = {
   stringCount: number,
   rating: number,
   price: number,
-  comments: GuitarComment[],
+  comments: GuitarComments,
 };
 
 type Guitars = Guitar[];
 
 export type {
-  GuitarComment,
   Guitar,
-  Guitars
+  Guitars,
+  GuitarComment,
+  GuitarComments
 };

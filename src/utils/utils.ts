@@ -40,13 +40,31 @@ const addBreadcrumbsItem = (nav: NavItem[], item: NavItem) => {
 
 const formatPrice = (price: number) => new Intl.NumberFormat(LANG).format(price);
 
-const getTabIndexValue = (isActive: boolean) => isActive ? TabIndexValue.Negative : TabIndexValue.Default;
+const getTabIndexValue = (isActive: boolean) => isActive ? TabIndexValue.Negative
+  : TabIndexValue.Default;
 
 const scrollToTop = () => window.scrollTo(0, 0);
 
 const addStringToArray = (value: string) => value ? [value] : [];
 
 const isActive = (currentValue: string, activeValue: string) => currentValue === activeValue;
+
+const humanizeDate = (date: string) => new Date(date)
+  .toLocaleDateString(LANG, {day: '2-digit', month: 'long'});
+
+const isEscEvent = (key: string) => key === 'Escape' || key === 'Esc';
+
+const subscribeEscEvent = (performActions?: () => void | undefined) => {
+  const onEscKeyPress = (evt: KeyboardEvent) => isEscEvent(evt.key)
+    && performActions && performActions();
+
+  return performActions
+    ? document.addEventListener('keydown', onEscKeyPress)
+    : document.removeEventListener('keydown', onEscKeyPress);
+};
+
+const getSelectedElements = (nodes: HTMLFormElement) => Object.values(nodes)
+  .filter((node) => node.checked);
 
 export {
   debouncedFindGuitars,
@@ -57,5 +75,8 @@ export {
   getTabIndexValue,
   scrollToTop,
   addStringToArray,
-  isActive
+  isActive,
+  humanizeDate,
+  subscribeEscEvent,
+  getSelectedElements
 };

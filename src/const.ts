@@ -16,6 +16,7 @@ enum AppRoute {
 
 enum ApiRoute {
   Guitars = '/guitars',
+  Comments = '/comments',
 }
 
 enum NavLinkTitle {
@@ -46,6 +47,7 @@ enum SortType {
   Down = 'desc',
   Price = 'price',
   Rating = 'rating',
+  Date = 'createAt',
 }
 
 enum GuitarType {
@@ -65,7 +67,9 @@ enum MessageText {
   Loading = 'Загрузка...',
   NotFound = 'Ничего не найдено :(',
   Error = 'При загрузке данных произошла ошибка',
+  ErrorSend = 'При отправке данных произошла ошибка',
   PriceError = 'Произошла ошибка при загрузке минимальной и максимальной стоимости товаров',
+  ReviewsError = 'Произошла ошибка при загрузке отзывов на товар',
 }
 
 enum PageInfo {
@@ -78,8 +82,22 @@ enum PaginationInfo {
   Next = 'Далее',
 }
 
+enum ModalType {
+  Form = 'review',
+  Success = 'success',
+}
+
+enum ReviewFieldName {
+  Name = 'user-name',
+  Rate = 'rate',
+  Advantage = 'advantage',
+  Disadvantage = 'disadvantage',
+  Comment = 'comment',
+}
+
 const TOTAL_COUNT_HEADER = 'x-total-count';
 const MAX_GUITAR_COUNT = 9;
+const MAX_REVIEW_COUNT = 3;
 const DEFAULT_PAGE_PATH = generatePath(AppRoute.Catalog, {page: PageInfo.DefaultPage});
 
 const UNKNOWN_ACTION = {
@@ -97,8 +115,11 @@ export {
   MessageText,
   PageInfo,
   PaginationInfo,
+  ModalType,
+  ReviewFieldName,
   TOTAL_COUNT_HEADER,
   MAX_GUITAR_COUNT,
+  MAX_REVIEW_COUNT,
   DEFAULT_PAGE_PATH,
   UNKNOWN_ACTION
 };

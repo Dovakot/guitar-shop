@@ -1,6 +1,14 @@
 import {datatype, lorem, name, image} from 'faker';
 
-import {MAX_GUITAR_COUNT, SortType, GuitarType, GuitarString, PageInfo} from '../const';
+import {
+  MAX_GUITAR_COUNT,
+  MAX_REVIEW_COUNT,
+  SortType,
+  GuitarType,
+  GuitarString,
+  PageInfo
+} from '../const';
+
 import {createArrayOfObjects} from '../utils/utils';
 import {GuitarComment, Guitar} from '../types/guitar-types';
 import {IconSize} from '../types/types';
@@ -50,6 +58,10 @@ const mockDefaultPrices = {minPrice: mockPriceMin, maxPrice: mockPriceMax};
 
 const mockCatalogPage = PageInfo.MaxPage;
 
+const mockComments = mockGuitar.comments;
+const mockMaxComments = createArrayOfObjects(createMockComment, MAX_REVIEW_COUNT);
+const mockCommentCount = mockComments.length;
+
 export {
   mockIconSize,
   mockGuitar,
@@ -62,5 +74,9 @@ export {
   mockPriceMin,
   mockPriceMax,
   mockDefaultPrices,
-  mockCatalogPage
+  mockCatalogPage,
+  createMockComment,
+  mockComments,
+  mockMaxComments,
+  mockCommentCount
 };
