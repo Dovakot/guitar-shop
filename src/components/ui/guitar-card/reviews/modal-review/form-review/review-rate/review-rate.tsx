@@ -3,6 +3,8 @@ import React from 'react';
 import RateItem from './rate-item/rate-item';
 import WarningText from '../warning-text/warning-text';
 
+import './review-rate.css';
+
 type ReviewRateProps = {
   name: string,
   message: string,
@@ -34,7 +36,7 @@ function ReviewRate({name, message, isValid}: ReviewRateProps): JSX.Element {
       <span className="form-review__label form-review__label--required">
         Ваша Оценка
       </span>
-      <div className="rate rate--reverse">
+      <div dir="rtl" className="rate rate--reverse">
         {allStars.map(getRateItem)}
 
         <WarningText

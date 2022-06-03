@@ -1,0 +1,10 @@
+.rate--reverse {
+  flex-direction: row;
+}
+
+.rate > input:checked ~ label,
+.rate:not(:checked) > label::before,
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+  background-position: right -1px top 0;
+}
