@@ -1,11 +1,15 @@
 import React from 'react';
 import {useLocation} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 import {formatPrice} from '../../../utils/utils';
 import {Guitar} from '../../../types/guitar-types';
 import {IconSize} from '../../../types/types';
 import {getGuitarReviews} from '../../../store/reducers/review-data/selectors';
+import {
+  setStateModalPreorder,
+  setInfoModalPreorder
+} from '../../../store/reducers/cart-data/cart-data';
 
 import Breadcrumbs from '../breadcrumbs/breadcrumbs';
 import Rating from '../rating/rating';
@@ -14,6 +18,7 @@ import TabItem from './tabs/tab-item/tab-item';
 import Features from './features/features';
 import Description from './description/description';
 import Reviews from './reviews/reviews';
+import ModalPreorder from '../order-card/modal-preorder/modal-preorder';
 
 const iconSize:IconSize = {
   width: 14,
@@ -37,12 +42,18 @@ function GuitarCard({
   rating,
   price,
 }: Guitar): JSX.Element {
+  const dispatch = useDispatch();
   const {pathname} = useLocation();
   const {totalCount} = useSelector(getGuitarReviews);
 
   const formattedPrice = formatPrice(price);
   const breadcrumbsItem = getBreadcrumbsItem(name, pathname);
   const alt = `${name} ${type}`;
+
+  const handleButtonAddClick = () => {
+    dispatch(setInfoModalPreorder({id, name, vendorCode, type, previewImg, stringCount, price}));
+    dispatch(setStateModalPreorder(false));
+  };
 
   return (
     <>
@@ -87,7 +98,12 @@ function GuitarCard({
           <p className="product-container__price-info product-container__price-info--value">
             {formattedPrice} ₽
           </p>
-          <a className="button button--red button--big product-container__button" href="#top">Добавить в корзину</a>
+          <button
+            className="button button--red button--big product-container__button"
+            onClick={handleButtonAddClick}
+          >
+            Добавить в корзину
+          </button>
         </div>
       </div>
 
@@ -95,6 +111,8 @@ function GuitarCard({
         guitarId={id}
         guitarName={name}
       />
+
+      <ModalPreorder />
     </>
   );
 }

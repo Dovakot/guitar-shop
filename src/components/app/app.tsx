@@ -9,6 +9,7 @@ import browserHistory from '../../browser-history';
 import BasePage from '../base-page/base-page';
 import Main from '../pages/main/main';
 import Product from '../pages/product/product';
+import Cart from '../pages/cart/cart';
 import NotFound from '../pages/not-found/not-found';
 
 function App(): JSX.Element {
@@ -29,7 +30,7 @@ function App(): JSX.Element {
           </Route>
 
           <Route path={AppRoute.Cart} exact>
-            <BasePage title={NavLinkTitle.Cart} />
+            <Cart />
           </Route>
 
           <Route path={AppRoute.Stores} exact>

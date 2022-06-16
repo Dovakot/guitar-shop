@@ -38,6 +38,24 @@ type ReviewData = {
   isLoading: boolean,
 };
 
+type CartData = {
+  preorder: Guitar,
+  order: {
+    data: Guitars,
+    orderCount: number,
+    isError: boolean,
+    isLoading: boolean,
+  },
+  orderConfig: {[key: string]: {
+    count: number,
+    amount: number,
+  }},
+  totalAmount: number,
+  totalCount: number,
+  isDelete: boolean,
+  isModalHidden: boolean,
+};
+
 type RootState = ReturnType<typeof rootReducer>;
 type RootStateIndex = keyof RootState;
 
@@ -48,7 +66,7 @@ type ThunkActionResult<R = Promise<void>> = ThunkAction<
   Action
 >
 
-type RootStatePartial<T = CatalogData | ProductData | GeneratedParams | ReviewData> = {
+type RootStatePartial<T = CatalogData | ProductData | GeneratedParams | ReviewData | CartData> = {
   [P in keyof T]?: T[P];
 };
 
@@ -56,6 +74,7 @@ export type {
   CatalogData,
   ProductData,
   ReviewData,
+  CartData,
   RootState,
   RootStateIndex,
   ThunkActionResult,

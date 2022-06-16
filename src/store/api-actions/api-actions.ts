@@ -31,6 +31,7 @@ import {redirect} from '../actions/actions';
 import {loadGuitarReviews, addGuitarReview} from '../reducers/review-data/review-data';
 import queryStringInitialState from '../reducers/query-string-data/query-string-initial-state';
 import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
+import {setLoadingCartPage, loadOrderData} from '../reducers/cart-data/cart-data';
 
 const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -138,11 +139,33 @@ const sendGuitarReview = (review: GeneratedReview): ThunkActionResult =>
     }
   };
 
+const fetchOrderData = (): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const {[NameSpace.Cart]: {orderConfig}} = _getState();
+    const url = Object.keys(orderConfig).join('&id=');
+
+    if (!url) {
+      return;
+    }
+
+    dispatch(setLoadingCartPage());
+
+    try {
+      const {data} = await api.get(`${ApiRoute.Guitars}?id=${url}`);
+
+      dispatch(loadOrderData({data, isError: false}));
+    } catch(error) {
+      dispatch(loadOrderData({data: [], isError: true}));
+      toast.error(MessageText.Error);
+    }
+  };
+
 export {
   fetchGuitar,
   fetchGuitars,
   fetchGuitarPrice,
   fetchFoundGuitars,
   fetchGuitarReviews,
-  sendGuitarReview
+  sendGuitarReview,
+  fetchOrderData
 };

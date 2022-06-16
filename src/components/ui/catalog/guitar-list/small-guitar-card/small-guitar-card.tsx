@@ -1,12 +1,21 @@
-import React from 'react';
+import React, {MouseEvent} from 'react';
 import {Link, generatePath} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 import {AppRoute} from '../../../../../const';
 import {formatPrice} from '../../../../../utils/utils';
 import {IconSize} from '../../../../../types/types';
 import {Guitar} from '../../../../../types/guitar-types';
+import {
+  setInfoModalPreorder,
+  setStateModalPreorder
+} from '../../../../../store/reducers/cart-data/cart-data';
 
 import Rating from '../../../rating/rating';
+
+type SmallGuitarCardProps = Guitar & {
+  isToCart: boolean,
+};
 
 const iconSize:IconSize = {
   width: 12,
@@ -16,15 +25,27 @@ const iconSize:IconSize = {
 function SmallGuitarCard({
   id,
   name,
+  vendorCode,
+  type,
   previewImg,
   stringCount,
   rating,
   price,
   comments,
-}: Guitar): JSX.Element {
+  isToCart,
+}: SmallGuitarCardProps): JSX.Element {
+  const dispatch = useDispatch();
+
   const pathToGuitar = generatePath(AppRoute.Guitar, {id});
   const formattedPrice = formatPrice(price);
   const commentCount = comments.length;
+
+  const handleButtonBuyClick = (evt: MouseEvent<HTMLElement>) => {
+    evt.preventDefault();
+
+    dispatch(setInfoModalPreorder({id, name, vendorCode, type, previewImg, stringCount, price}));
+    dispatch(setStateModalPreorder(false));
+  };
 
   return (
     <div
@@ -58,7 +79,24 @@ function SmallGuitarCard({
         >
           Подробнее
         </Link>
-        <a className="button button--red button--mini button--add-to-cart" href="#top">Купить</a>
+
+        {isToCart
+          ? (
+            <Link
+              className="button button--red-border button--mini button--in-cart"
+              to={AppRoute.Cart}
+            >
+              В Корзине
+            </Link>
+          )
+          : (
+            <button
+              className="button button--red button--mini button--add-to-cart"
+              onClick={handleButtonBuyClick}
+            >
+              Купить
+            </button>
+          )}
       </div>
     </div>
   );

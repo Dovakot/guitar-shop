@@ -4,6 +4,7 @@ import catalogInitialState from '../store/reducers/catalog-data/catalog-initial-
 import productInitialState from '../store/reducers/product-data/product-initial-state';
 import queryStringInitialState from '../store/reducers/query-string-data/query-string-initial-state';
 import reviewInitialState from '../store/reducers/review-data/review-initial-state';
+import cartInitialState from '../store/reducers/cart-data/cart-initial-state';
 
 const mockInitialState: RootState = {
   [NameSpace.Catalog]: {
@@ -17,6 +18,9 @@ const mockInitialState: RootState = {
   },
   [NameSpace.Review]: {
     ...reviewInitialState,
+  },
+  [NameSpace.Cart]: {
+    ...cartInitialState,
   },
 };
 

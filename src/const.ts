@@ -104,6 +104,12 @@ const UNKNOWN_ACTION = {
   type: 'UNKNOWN_ACTION',
 } as const;
 
+const GUITAR_TYPE_RU:{[key: string]: string} = {
+  [GuitarType.Acoustic]: 'Акустическая',
+  [GuitarType.Electric]: 'Электрогитара',
+  [GuitarType.Ukulele]: 'Укулеле',
+};
+
 export {
   SearchParams,
   AppRoute,
@@ -121,5 +127,6 @@ export {
   MAX_GUITAR_COUNT,
   MAX_REVIEW_COUNT,
   DEFAULT_PAGE_PATH,
-  UNKNOWN_ACTION
+  UNKNOWN_ACTION,
+  GUITAR_TYPE_RU
 };

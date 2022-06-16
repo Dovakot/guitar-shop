@@ -1,19 +1,15 @@
 import React from 'react';
 
+import {GUITAR_TYPE_RU} from '../../../../const';
+
 type FeaturesProps = {
   vendorCode: string,
   typeKey: string,
   stringCount: number,
 };
 
-const guitarTypeRu: {[key: string]: string} = {
-  acoustic: 'Акустическая',
-  electric: 'Электрогитара',
-  ukulele: 'Укулеле',
-};
-
 function Features({vendorCode, typeKey, stringCount}: FeaturesProps): JSX.Element {
-  const type = guitarTypeRu[typeKey];
+  const type = GUITAR_TYPE_RU[typeKey];
 
   return (
     <table className="tabs__table">

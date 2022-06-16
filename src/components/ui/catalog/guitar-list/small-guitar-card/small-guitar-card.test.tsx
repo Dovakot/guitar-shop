@@ -11,6 +11,7 @@ describe('SmallGuitarCard component', () => {
       <BrowserRouter>
         <SmallGuitarCard
           {...mockGuitar}
+          isToCart={false}
         />
       </BrowserRouter>,
     );

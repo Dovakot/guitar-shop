@@ -1,11 +1,9 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
-
-import {AppRoute} from '../../../const';
 
 import Logo from '../logo/logo';
 import Nav from './nav/nav';
 import Search from './search/search';
+import CartLink from './cart-link/cart-link';
 
 function Header(): JSX.Element {
   return (
@@ -18,19 +16,7 @@ function Header(): JSX.Element {
         <Logo className="header" />
         <Nav />
         <Search />
-
-        <NavLink
-          className="header__cart-link"
-          aria-label="Корзина"
-          activeClassName="link--current"
-          to={AppRoute.Cart}
-          exact
-        >
-          <svg className="header__cart-icon" width={14} height={14} aria-hidden="true">
-            <use xlinkHref="#icon-basket" />
-          </svg>
-          <span className="visually-hidden">Перейти в корзину</span>
-        </NavLink>
+        <CartLink />
       </div>
     </header>
   );
