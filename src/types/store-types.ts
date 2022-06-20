@@ -6,6 +6,12 @@ import {GeneratedParams} from './types';
 import {Guitars, Guitar, GuitarComments} from './guitar-types';
 import {rootReducer} from '../store/reducers/root-reducer';
 
+type OrderConfig = {
+  count: number,
+  price: number,
+  amount: number,
+};
+
 type CatalogData = {
   defaultMinPrice: number,
   defaultMaxPrice: number,
@@ -46,10 +52,9 @@ type CartData = {
     isError: boolean,
     isLoading: boolean,
   },
-  orderConfig: {[key: string]: {
-    count: number,
-    amount: number,
-  }},
+  orderConfig: {
+    [key: string]: OrderConfig,
+  },
   totalAmount: number,
   totalCount: number,
   isDelete: boolean,
@@ -71,6 +76,7 @@ type RootStatePartial<T = CatalogData | ProductData | GeneratedParams | ReviewDa
 };
 
 export type {
+  OrderConfig,
   CatalogData,
   ProductData,
   ReviewData,

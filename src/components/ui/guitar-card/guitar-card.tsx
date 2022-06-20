@@ -2,10 +2,13 @@ import React from 'react';
 import {useLocation} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 
+import {MAX_COUNT_GUITAR_IN_CART} from '../../../const';
 import {formatPrice} from '../../../utils/utils';
+import {showLimitToast} from '../../../utils/cart-utils';
 import {Guitar} from '../../../types/guitar-types';
 import {IconSize} from '../../../types/types';
 import {getGuitarReviews} from '../../../store/reducers/review-data/selectors';
+import {getOrderConfig} from '../../../store/reducers/cart-data/selectors';
 import {
   setStateModalPreorder,
   setInfoModalPreorder
@@ -31,27 +34,34 @@ const getBreadcrumbsItem = (name: string, route: string) => ({
   route,
 });
 
-function GuitarCard({
-  id,
-  name,
-  vendorCode,
-  type,
-  description,
-  previewImg,
-  stringCount,
-  rating,
-  price,
-}: Guitar): JSX.Element {
+function GuitarCard(props: Guitar): JSX.Element {
   const dispatch = useDispatch();
   const {pathname} = useLocation();
+  const {
+    id,
+    name,
+    vendorCode,
+    type,
+    description,
+    previewImg,
+    stringCount,
+    rating,
+    price,
+  } = props;
+
   const {totalCount} = useSelector(getGuitarReviews);
+  const order = useSelector(getOrderConfig)[id];
 
   const formattedPrice = formatPrice(price);
   const breadcrumbsItem = getBreadcrumbsItem(name, pathname);
   const alt = `${name} ${type}`;
 
   const handleButtonAddClick = () => {
-    dispatch(setInfoModalPreorder({id, name, vendorCode, type, previewImg, stringCount, price}));
+    if (order && order.count === MAX_COUNT_GUITAR_IN_CART) {
+      return showLimitToast(name);
+    }
+
+    dispatch(setInfoModalPreorder(props));
     dispatch(setStateModalPreorder(false));
   };
 

@@ -22,19 +22,17 @@ const iconSize:IconSize = {
   height: 11,
 };
 
-function SmallGuitarCard({
-  id,
-  name,
-  vendorCode,
-  type,
-  previewImg,
-  stringCount,
-  rating,
-  price,
-  comments,
-  isToCart,
-}: SmallGuitarCardProps): JSX.Element {
+function SmallGuitarCard(props: SmallGuitarCardProps): JSX.Element {
   const dispatch = useDispatch();
+  const {
+    id,
+    name,
+    previewImg,
+    rating,
+    price,
+    comments,
+    isToCart,
+  } = props;
 
   const pathToGuitar = generatePath(AppRoute.Guitar, {id});
   const formattedPrice = formatPrice(price);
@@ -43,7 +41,7 @@ function SmallGuitarCard({
   const handleButtonBuyClick = (evt: MouseEvent<HTMLElement>) => {
     evt.preventDefault();
 
-    dispatch(setInfoModalPreorder({id, name, vendorCode, type, previewImg, stringCount, price}));
+    dispatch(setInfoModalPreorder(props));
     dispatch(setStateModalPreorder(false));
   };
 

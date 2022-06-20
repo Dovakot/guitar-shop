@@ -95,9 +95,15 @@ enum ReviewFieldName {
   Comment = 'comment',
 }
 
+enum CartActionType {
+  Increase = 'increase',
+  Decrease = 'decrease',
+}
+
 const TOTAL_COUNT_HEADER = 'x-total-count';
 const MAX_GUITAR_COUNT = 9;
 const MAX_REVIEW_COUNT = 3;
+const MAX_COUNT_GUITAR_IN_CART = 99;
 const DEFAULT_PAGE_PATH = generatePath(AppRoute.Catalog, {page: PageInfo.DefaultPage});
 
 const UNKNOWN_ACTION = {
@@ -123,10 +129,12 @@ export {
   PaginationInfo,
   ModalType,
   ReviewFieldName,
+  CartActionType,
   TOTAL_COUNT_HEADER,
   MAX_GUITAR_COUNT,
   MAX_REVIEW_COUNT,
   DEFAULT_PAGE_PATH,
+  MAX_COUNT_GUITAR_IN_CART,
   UNKNOWN_ACTION,
   GUITAR_TYPE_RU
 };

@@ -4,11 +4,13 @@ import {useParams, useHistory} from 'react-router-dom';
 
 import {ModalType, DEFAULT_PAGE_PATH} from '../../../../const';
 import {isActive} from '../../../../utils/utils';
-import {getStateModalPreorder, getPreOrderId} from '../../../../store/reducers/cart-data/selectors';
+import {getStateModalPreorder, getPreorder} from '../../../../store/reducers/cart-data/selectors';
 import {
   setStateModalPreorder,
   addItemToOrder,
-  setUpdateTypeDelete
+  setUpdateTypeDelete,
+  deleteItemInOrder,
+  setInfoModalPreorder
 } from '../../../../store/reducers/cart-data/cart-data';
 
 import Modal from '../../../modal/modal';
@@ -17,15 +19,17 @@ import SuccessMessage from './success-message/success-message';
 
 function ModalPreorder(): JSX.Element {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const {id} = useParams<{id: string}>();
   const [modalType, setModalType] = useState<string>('');
   const {isModalPreorderHidden} = useSelector(getStateModalPreorder);
-  const orderId = useSelector(getPreOrderId);
-
-  const history = useHistory();
-  const {id} = useParams<{id: string}>();
+  const {id: orderId} = useSelector(getPreorder);
 
   const setStateModal = (isHidden: boolean) => {
     dispatch(setStateModalPreorder(isHidden));
+    dispatch(setUpdateTypeDelete(false));
+    dispatch(setInfoModalPreorder({}));
     setModalType('');
   };
 
@@ -43,7 +47,8 @@ function ModalPreorder(): JSX.Element {
   };
 
   const handleButtonDeleteClick = () => {
-    dispatch(setUpdateTypeDelete(true));
+    dispatch(deleteItemInOrder(orderId));
+    setStateModal(true);
   };
 
   const getModalContent = () => isActive(modalType, ModalType.Success)

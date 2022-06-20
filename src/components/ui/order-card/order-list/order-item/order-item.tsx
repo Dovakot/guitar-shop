@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
+import {useDispatch} from 'react-redux';
 
-import {GUITAR_TYPE_RU} from '../../../../../const';
+import {CartActionType, GUITAR_TYPE_RU, MAX_COUNT_GUITAR_IN_CART} from '../../../../../const';
 import {formatPrice} from '../../../../../utils/utils';
+import {checkQuantityField, showLimitToast} from '../../../../../utils/cart-utils';
 import {Guitar} from '../../../../../types/guitar-types';
+import {
+  changeItemInOrder,
+  setInfoModalPreorder,
+  setStateModalPreorder,
+  setUpdateTypeDelete
+} from '../../../../../store/reducers/cart-data/cart-data';
 
 type OrderItemProps = Guitar & {
   orderAmount: number,
@@ -10,25 +18,54 @@ type OrderItemProps = Guitar & {
   fieldName: string,
 };
 
-function OrderItem({
-  id,
-  name,
-  vendorCode,
-  type,
-  previewImg,
-  stringCount,
-  price,
-  orderAmount,
-  orderCount,
-  fieldName,
-}: OrderItemProps): JSX.Element {
+function OrderItem(props: OrderItemProps): JSX.Element {
+  const dispatch = useDispatch();
+  const {
+    id,
+    name,
+    vendorCode,
+    type,
+    previewImg,
+    stringCount,
+    price,
+    orderAmount,
+    orderCount,
+    fieldName,
+  } = props;
+
   const formattedPrice = formatPrice(price);
   const formattedAmount = formatPrice(orderAmount);
   const typeRu = GUITAR_TYPE_RU[type];
 
+  const showModalDelete = () => {
+    dispatch(setInfoModalPreorder(props));
+    dispatch(setStateModalPreorder(false));
+    dispatch(setUpdateTypeDelete(true));
+  };
+
+  const handleIncreaseButtonClick = () => orderCount === MAX_COUNT_GUITAR_IN_CART
+    ? showLimitToast(name)
+    : dispatch(changeItemInOrder({id, type: CartActionType.Increase}));
+
+  const handleDecreaseButtonClick = () => orderCount === 1 ? showModalDelete()
+    : dispatch(changeItemInOrder({id, type: CartActionType.Decrease}));
+
+  const handleDeleteButtonClick = () => showModalDelete();
+
+  const handleQuantityFieldChange = ({target}: ChangeEvent<HTMLInputElement>) => {
+    const value = checkQuantityField(target, orderCount);
+
+    dispatch(changeItemInOrder({id, type: value}));
+  };
+
   return (
     <div className="cart-item">
-      <button className="cart-item__close-button button-cross" type="button" aria-label="Удалить">
+      <button
+        className="cart-item__close-button button-cross"
+        type="button"
+        aria-label="Удалить"
+        onClick={handleDeleteButtonClick}
+      >
         <span className="button-cross__icon" />
         <span className="cart-item__close-button-interactive-area" />
       </button>
@@ -56,7 +93,11 @@ function OrderItem({
         {formattedPrice} ₽
       </div>
       <div className="quantity cart-item__quantity">
-        <button className="quantity__button" aria-label="Уменьшить количество">
+        <button
+          className="quantity__button"
+          aria-label="Уменьшить количество"
+          onClick={handleDecreaseButtonClick}
+        >
           <svg width={8} height={8} aria-hidden="true">
             <use xlinkHref="#icon-minus" />
           </svg>
@@ -65,11 +106,17 @@ function OrderItem({
           className="quantity__input"
           type="number"
           name={fieldName}
-          defaultValue={orderCount}
+          value={orderCount}
           min={1}
-          max={99}
+          max={MAX_COUNT_GUITAR_IN_CART}
+          required
+          onChange={handleQuantityFieldChange}
         />
-        <button className="quantity__button" aria-label="Увеличить количество">
+        <button
+          className="quantity__button"
+          aria-label="Увеличить количество"
+          onClick={handleIncreaseButtonClick}
+        >
           <svg width={8} height={8} aria-hidden="true">
             <use xlinkHref="#icon-plus" />
           </svg>

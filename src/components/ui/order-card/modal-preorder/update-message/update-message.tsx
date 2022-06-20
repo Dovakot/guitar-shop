@@ -4,7 +4,7 @@ import cn from 'classnames';
 
 import {GUITAR_TYPE_RU} from '../../../../../const';
 import {formatPrice} from '../../../../../utils/utils';
-import {getStateModalPreorder, getPreOrder} from '../../../../../store/reducers/cart-data/selectors';
+import {getStateModalPreorder, getPreorder} from '../../../../../store/reducers/cart-data/selectors';
 
 import ButtonAdd from './button-add/button-add';
 import ButtonDelete from './button-delete/button-delete';
@@ -28,7 +28,7 @@ function UpdateMessage({
     previewImg,
     stringCount,
     price,
-  } = useSelector(getPreOrder);
+  } = useSelector(getPreorder);
 
   const titleClass = cn('modal__header title title--medium', {
     'title--red': isUpdateTypeDelete,

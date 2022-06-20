@@ -1,11 +1,9 @@
 import {NameSpace} from '../root-reducer';
 import {RootState} from '../../../types/store-types';
 
-const getPreOrder = (state: RootState) => state[NameSpace.Cart].preorder;
+const getPreorder = (state: RootState) => state[NameSpace.Cart].preorder;
 
 const getOrderData = (state: RootState) => state[NameSpace.Cart].order;
-
-const getPreOrderId = (state: RootState) => state[NameSpace.Cart].preorder.id;
 
 const getOrderConfig = (state: RootState) => state[NameSpace.Cart].orderConfig;
 
@@ -19,9 +17,8 @@ const getStateModalPreorder = (state: RootState) => ({
 });
 
 export {
-  getPreOrder,
+  getPreorder,
   getOrderData,
-  getPreOrderId,
   getOrderConfig,
   getOrderCount,
   getTotalInfo,

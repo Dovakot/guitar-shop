@@ -1,0 +1,8 @@
+.header__cart-count--limit {
+  width: auto;
+  right: -20px;
+  text-align: left;
+  color: #eb5555;
+  background-color: transparent;
+  border-radius: 0;
+}

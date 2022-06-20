@@ -9,7 +9,7 @@ import {subscribeEscEvent} from '../../utils/utils';
 type ModalProps = {
   modifier?: string,
   children: React.ReactElement,
-  setStateModal: (a: boolean) => void;
+  setStateModal: (a: boolean, b?: boolean) => void;
   isModalHidden: boolean,
 };
 

@@ -1,12 +1,19 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import cn from 'classnames';
 
-import {AppRoute} from '../../../../const';
+import './cart-link.css';
+
+import {AppRoute, MAX_COUNT_GUITAR_IN_CART} from '../../../../const';
 import {getOrderCount} from '../../../../store/reducers/cart-data/selectors';
 
 function CartLink(): JSX.Element {
   const totalCount = useSelector(getOrderCount);
+
+  const countClass = cn('header__cart-count', {
+    'header__cart-count--limit': totalCount > MAX_COUNT_GUITAR_IN_CART,
+  });
 
   return (
     <NavLink
@@ -20,7 +27,7 @@ function CartLink(): JSX.Element {
         <use xlinkHref="#icon-basket" />
       </svg>
       <span className="visually-hidden">Перейти в корзину</span>
-      {totalCount ? <span className="header__cart-count">{totalCount}</span> : ''}
+      {totalCount ? <span className={countClass}>{totalCount}</span> : ''}
     </NavLink>
   );
 }
