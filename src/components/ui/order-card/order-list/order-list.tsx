@@ -4,7 +4,6 @@ import {useSelector} from 'react-redux';
 import {Guitar} from '../../../../types/guitar-types';
 import {getOrderData, getOrderConfig} from '../../../../store/reducers/cart-data/selectors';
 
-import ModalPreorder from '../../order-card/modal-preorder/modal-preorder';
 import OrderItem from './order-item/order-item';
 
 function OrderList(): JSX.Element {
@@ -30,8 +29,6 @@ function OrderList(): JSX.Element {
   return (
     <>
       {data.map(getOrderItem)}
-
-      <ModalPreorder />
     </>
   );
 }

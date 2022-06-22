@@ -31,7 +31,7 @@ import {redirect} from '../actions/actions';
 import {loadGuitarReviews, addGuitarReview} from '../reducers/review-data/review-data';
 import queryStringInitialState from '../reducers/query-string-data/query-string-initial-state';
 import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
-import {setLoadingCartPage, loadOrderData} from '../reducers/cart-data/cart-data';
+import {setLoadingCartPage, loadOrderData, setDiscount, applyDiscount} from '../reducers/cart-data/cart-data';
 
 const fetchGuitars = (currentValue?: GeneratedParams, currentLocation?: string): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
@@ -160,6 +160,23 @@ const fetchOrderData = (): ThunkActionResult =>
     }
   };
 
+const sendOrderCoupon = (coupon: string): ThunkActionResult =>
+  async (dispatch, _getState, api): Promise<void> => {
+    const calculateTotalAmount = async (percent: number, name: string) => {
+      await dispatch(setDiscount({percent, name}));
+      dispatch(applyDiscount());
+    };
+
+    try {
+      const {data} = await api.post(`${ApiRoute.Coupons}`, {coupon});
+
+      calculateTotalAmount(data, coupon);
+    } catch(error) {
+      calculateTotalAmount(0, '');
+      throw error;
+    }
+  };
+
 export {
   fetchGuitar,
   fetchGuitars,
@@ -167,5 +184,6 @@ export {
   fetchFoundGuitars,
   fetchGuitarReviews,
   sendGuitarReview,
-  fetchOrderData
+  fetchOrderData,
+  sendOrderCoupon
 };

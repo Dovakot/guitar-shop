@@ -1,26 +1,26 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 import cartInitialState from './cart-initial-state';
-import {changeOrderCount, addOrder, deleteOrder} from '../../../utils/cart-utils';
+import {changeOrderCount, addOrder, deleteOrder, calculateDiscount} from '../../../utils/cart-utils';
 
 const cartData = createSlice({
   name: 'cart',
   initialState: cartInitialState,
   reducers: {
-    setInfoModalPreorder: (state, {payload}) => {
-      state.preorder = payload;
+    setInfoModalPreorder: ({preorder}, {payload}) => {
+      preorder.data = payload;
     },
-    setStateModalPreorder: (state, {payload}) => {
-      state.isModalHidden = payload;
+    setStateModalPreorder: ({preorder}, {payload}) => {
+      preorder.isHidden = payload;
     },
-    setUpdateTypeDelete: (state, {payload}) => {
-      state.isDelete = payload;
+    setUpdateTypeDelete: ({preorder}, {payload}) => {
+      preorder.isDelete = payload;
     },
     setLoadingCartPage: ({order}) => {
       order.isLoading = true;
     },
     addItemToOrder: (state, {payload}) => {
-      const {price} = state.preorder;
+      const {price} = state.preorder.data;
       const order = addOrder(payload, state.orderConfig[payload], price);
 
       state.orderConfig[payload] = order;
@@ -56,6 +56,16 @@ const cartData = createSlice({
       order.isLoading = payload.isError;
       order.isError = payload.isError;
     },
+    setDiscount: ({coupon}, {payload}) => {
+      coupon.percent = payload.percent;
+      coupon.name = payload.name;
+    },
+    applyDiscount: (state) => {
+      const {toPay, discount} = calculateDiscount(state.totalAmount, state.coupon.percent);
+
+      state.discount = discount;
+      state.toPay = toPay;
+    },
   },
 });
 
@@ -68,6 +78,8 @@ export const {
   changeItemInOrder,
   setLoadingCartPage,
   loadOrderData,
+  setDiscount,
+  applyDiscount,
 } = cartData.actions;
 
 export default cartData.reducer;

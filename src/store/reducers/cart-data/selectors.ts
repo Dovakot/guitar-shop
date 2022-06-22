@@ -1,7 +1,7 @@
 import {NameSpace} from '../root-reducer';
 import {RootState} from '../../../types/store-types';
 
-const getPreorder = (state: RootState) => state[NameSpace.Cart].preorder;
+const getPreorder = (state: RootState) => state[NameSpace.Cart].preorder.data;
 
 const getOrderData = (state: RootState) => state[NameSpace.Cart].order;
 
@@ -9,11 +9,17 @@ const getOrderConfig = (state: RootState) => state[NameSpace.Cart].orderConfig;
 
 const getOrderCount = (state: RootState) => state[NameSpace.Cart].totalCount;
 
-const getTotalInfo = (state: RootState) => state[NameSpace.Cart].totalAmount;
+const getCouponName = (state: RootState) => state[NameSpace.Cart].coupon.name;
+
+const getTotalInfo = (state: RootState) => ({
+  totalAmount: state[NameSpace.Cart].totalAmount,
+  discount: state[NameSpace.Cart].discount,
+  toPay: state[NameSpace.Cart].toPay,
+});
 
 const getStateModalPreorder = (state: RootState) => ({
-  isModalPreorderHidden: state[NameSpace.Cart].isModalHidden,
-  isUpdateTypeDelete: state[NameSpace.Cart].isDelete,
+  isModalPreorderHidden: state[NameSpace.Cart].preorder.isHidden,
+  isUpdateTypeDelete: state[NameSpace.Cart].preorder.isDelete,
 });
 
 export {
@@ -21,6 +27,7 @@ export {
   getOrderData,
   getOrderConfig,
   getOrderCount,
+  getCouponName,
   getTotalInfo,
   getStateModalPreorder
 };

@@ -17,6 +17,7 @@ enum AppRoute {
 enum ApiRoute {
   Guitars = '/guitars',
   Comments = '/comments',
+  Coupons = '/coupons',
 }
 
 enum NavLinkTitle {

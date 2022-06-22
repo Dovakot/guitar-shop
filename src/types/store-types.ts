@@ -45,7 +45,11 @@ type ReviewData = {
 };
 
 type CartData = {
-  preorder: Guitar,
+  preorder: {
+    data: Guitar,
+    isDelete: boolean,
+    isHidden: boolean,
+  },
   order: {
     data: Guitars,
     orderCount: number,
@@ -55,10 +59,14 @@ type CartData = {
   orderConfig: {
     [key: string]: OrderConfig,
   },
+  coupon: {
+    percent: number,
+    name: string,
+  },
   totalAmount: number,
+  discount: number,
+  toPay: number,
   totalCount: number,
-  isDelete: boolean,
-  isModalHidden: boolean,
 };
 
 type RootState = ReturnType<typeof rootReducer>;

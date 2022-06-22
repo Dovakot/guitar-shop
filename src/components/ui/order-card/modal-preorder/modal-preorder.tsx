@@ -10,7 +10,8 @@ import {
   addItemToOrder,
   setUpdateTypeDelete,
   deleteItemInOrder,
-  setInfoModalPreorder
+  setInfoModalPreorder,
+  applyDiscount
 } from '../../../../store/reducers/cart-data/cart-data';
 
 import Modal from '../../../modal/modal';
@@ -41,13 +42,15 @@ function ModalPreorder(): JSX.Element {
     setStateModal(true);
   };
 
-  const handleButtonAddClick = () => {
+  const handleButtonAddClick = async () => {
+    await dispatch(addItemToOrder(orderId));
+    dispatch(applyDiscount());
     setModalType(ModalType.Success);
-    dispatch(addItemToOrder(orderId));
   };
 
-  const handleButtonDeleteClick = () => {
-    dispatch(deleteItemInOrder(orderId));
+  const handleButtonDeleteClick = async () => {
+    await dispatch(deleteItemInOrder(orderId));
+    dispatch(applyDiscount());
     setStateModal(true);
   };
 

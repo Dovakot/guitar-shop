@@ -9,7 +9,8 @@ import {
   changeItemInOrder,
   setInfoModalPreorder,
   setStateModalPreorder,
-  setUpdateTypeDelete
+  setUpdateTypeDelete,
+  applyDiscount
 } from '../../../../../store/reducers/cart-data/cart-data';
 
 type OrderItemProps = Guitar & {
@@ -43,20 +44,25 @@ function OrderItem(props: OrderItemProps): JSX.Element {
     dispatch(setUpdateTypeDelete(true));
   };
 
+  const changeOrderCount = async (actionType: string | number) => {
+    await dispatch(changeItemInOrder({id, type: actionType}));
+    dispatch(applyDiscount());
+  };
+
   const handleIncreaseButtonClick = () => orderCount === MAX_COUNT_GUITAR_IN_CART
     ? showLimitToast(name)
-    : dispatch(changeItemInOrder({id, type: CartActionType.Increase}));
+    : changeOrderCount(CartActionType.Increase);
 
   const handleDecreaseButtonClick = () => orderCount === 1 ? showModalDelete()
-    : dispatch(changeItemInOrder({id, type: CartActionType.Decrease}));
-
-  const handleDeleteButtonClick = () => showModalDelete();
+    : changeOrderCount(CartActionType.Decrease);
 
   const handleQuantityFieldChange = ({target}: ChangeEvent<HTMLInputElement>) => {
     const value = checkQuantityField(target, orderCount);
 
-    dispatch(changeItemInOrder({id, type: value}));
+    changeOrderCount(value);
   };
+
+  const handleDeleteButtonClick = () => showModalDelete();
 
   return (
     <div className="cart-item">

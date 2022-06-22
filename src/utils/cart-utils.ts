@@ -4,6 +4,8 @@ import {CartActionType, MAX_COUNT_GUITAR_IN_CART} from '../const';
 import {OrderConfig} from '../types/store-types';
 import {Guitars} from '../types/guitar-types';
 
+const MAX_PERCENT = 100;
+
 const changeOrderCount = (
   order: OrderConfig,
   totalCount: number,
@@ -56,14 +58,32 @@ const checkQuantityField = (target: HTMLInputElement, сount: number) => {
   return newValue;
 };
 
-const showLimitToast = (name: string) => {
-  toast.info(`Количество «${name}» не должно превышать ${MAX_COUNT_GUITAR_IN_CART} шт.`);
+const showLimitToast = (name: string) => toast
+  .info(`Количество «${name}» не должно превышать ${MAX_COUNT_GUITAR_IN_CART} шт.`);
+
+const showInvalidToast = () => toast.error('Промокод не может содержать символы пробела.');
+
+const calculateDiscount = (amount: number, percDiscount: number) => {
+  let discount = percDiscount;
+  let toPay = amount;
+
+  if (percDiscount) {
+    discount = amount / MAX_PERCENT * percDiscount;
+    toPay = amount - discount;
+  }
+
+  return {toPay, discount};
 };
+
+const isInvalidCoupon = (value: string) => /\s/.test(value);
 
 export {
   changeOrderCount,
   addOrder,
   deleteOrder,
   checkQuantityField,
-  showLimitToast
+  showLimitToast,
+  showInvalidToast,
+  calculateDiscount,
+  isInvalidCoupon
 };

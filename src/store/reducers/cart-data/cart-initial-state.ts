@@ -2,7 +2,11 @@ import {CartData} from '../../../types/store-types';
 import {Guitar} from '../../../types/guitar-types';
 
 const cartInitialState: CartData = {
-  preorder: {} as Guitar,
+  preorder:  {
+    data: {} as Guitar,
+    isDelete: false,
+    isHidden: true,
+  },
   order: {
     data: [],
     orderCount: 0,
@@ -10,10 +14,14 @@ const cartInitialState: CartData = {
     isError: false,
   },
   orderConfig: {},
-  totalAmount: 0,
+  coupon: {
+    percent: 0,
+    name: '',
+  },
   totalCount: 0,
-  isDelete: false,
-  isModalHidden: true,
+  totalAmount: 0,
+  discount: 0,
+  toPay: 0,
 };
 
 export default cartInitialState;

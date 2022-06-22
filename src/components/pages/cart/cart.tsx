@@ -11,6 +11,7 @@ import BasePage from '../../base-page/base-page';
 import Breadcrumbs from '../../ui/breadcrumbs/breadcrumbs';
 import OrderCard from '../../ui/order-card/order-card';
 import Loading from '../../ui/loading/loading';
+import ModalPreorder from '../../ui/order-card/modal-preorder/modal-preorder';
 
 const getBreadcrumbsItem = (name: string, route: string) => ({
   id: 'cart',
@@ -46,6 +47,8 @@ function Cart(): JSX.Element {
       {isLoading
         ? <Loading isError={isError} />
         : getOrderCard(orderCount)}
+
+      <ModalPreorder />
     </BasePage>
   );
 }
