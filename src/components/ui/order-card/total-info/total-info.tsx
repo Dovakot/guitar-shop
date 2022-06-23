@@ -17,7 +17,10 @@ function TotaInfo(): JSX.Element {
   const formattedToPay = formatPrice(toPay);
 
   return (
-    <div className="cart__total-info">
+    <div
+      className="cart__total-info"
+      data-testid="total-info"
+    >
       <p className="cart__total-item">
         <span className="cart__total-value-name">Всего:</span>
         <span className="cart__total-value">

@@ -65,7 +65,10 @@ function OrderItem(props: OrderItemProps): JSX.Element {
   const handleDeleteButtonClick = () => showModalDelete();
 
   return (
-    <div className="cart-item">
+    <div
+      className="cart-item"
+      data-testid="cart-item"
+    >
       <button
         className="cart-item__close-button button-cross"
         type="button"
@@ -117,11 +120,13 @@ function OrderItem(props: OrderItemProps): JSX.Element {
           max={MAX_COUNT_GUITAR_IN_CART}
           required
           onChange={handleQuantityFieldChange}
+          data-testid="quantity-input"
         />
         <button
           className="quantity__button"
           aria-label="Увеличить количество"
           onClick={handleIncreaseButtonClick}
+          data-testid="quantity-button"
         >
           <svg width={8} height={8} aria-hidden="true">
             <use xlinkHref="#icon-plus" />

@@ -5,13 +5,16 @@ import MockAdapter from 'axios-mock-adapter';
 import thunk from 'redux-thunk';
 
 import {ApiRoute, TOTAL_COUNT_HEADER, MAX_GUITAR_COUNT, MAX_REVIEW_COUNT} from '../../const';
+import {NameSpace} from '../../store/reducers/root-reducer';
 import {replaceGuitarReviewParams, getUrlToQuery} from '../../utils/query-utils';
 import createApi from '../../services/api';
 import {RootState} from '../../types/store-types';
-import {mockInitialState} from '../../mock/store-mock';
+import {mockInitialState, getMockState} from '../../mock/store-mock';
 import {setCatalogPages, setDefaultPriceFilter} from '../reducers/catalog-data/catalog-data';
 import {loadGuitarReviews, addGuitarReview} from '../reducers/review-data/review-data';
+import {loadOrderData, setLoadingCartPage, setDiscount, applyDiscount} from '../reducers/cart-data/cart-data';
 import queryStringInitialState from '../reducers/query-string-data/query-string-initial-state';
+import cartInitialState from '../reducers/cart-data/cart-initial-state';
 
 import {
   mockCatalogGuitars,
@@ -27,7 +30,9 @@ import {
   fetchFoundGuitars,
   fetchGuitar,
   fetchGuitarReviews,
-  sendGuitarReview
+  sendGuitarReview,
+  fetchOrderData,
+  sendOrderCoupon
 } from './api-actions';
 
 import {
@@ -142,6 +147,50 @@ describe('Api-actions', () => {
     expect(store.getActions())
       .toEqual([
         addGuitarReview(comment),
+      ]);
+  });
+
+  it('should fetch order data', async () => {
+    const mockOrders = mockCatalogGuitars.slice(0, 1);
+    const {id, price} = mockOrders[0];
+
+    const mockOrderConfig = {
+      [id]: {
+        count: 1,
+        amount: price,
+        price,
+      },
+    };
+
+    const mockState = getMockState(NameSpace.Cart, {
+      ...cartInitialState,
+      orderConfig: mockOrderConfig,
+    });
+
+    const store = mockStore(mockState);
+
+    mockApi.onGet(`${ApiRoute.Guitars}?id=${id}`).reply(STATUS_OK, mockOrders);
+
+    await store.dispatch(fetchOrderData());
+
+    expect(store.getActions())
+      .toEqual([
+        setLoadingCartPage(),
+        loadOrderData({data: mockOrders, isError: false}),
+      ]);
+  });
+
+  it('should send coupon', async () => {
+    const store = mockStore();
+
+    mockApi.onPost(`${ApiRoute.Coupons}`).reply(STATUS_OK, 15);
+
+    await store.dispatch(sendOrderCoupon('test'));
+
+    expect(store.getActions())
+      .toEqual([
+        setDiscount({percent: 15, name: 'test'}),
+        applyDiscount(),
       ]);
   });
 });

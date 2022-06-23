@@ -77,6 +77,9 @@ const calculateDiscount = (amount: number, percDiscount: number) => {
 
 const isInvalidCoupon = (value: string) => /\s/.test(value);
 
+const getGuitarIdsForUrl = (orderConfig: {[key: string]: OrderConfig}) => Object
+  .keys(orderConfig).join('&id=');
+
 export {
   changeOrderCount,
   addOrder,
@@ -85,5 +88,6 @@ export {
   showLimitToast,
   showInvalidToast,
   calculateDiscount,
-  isInvalidCoupon
+  isInvalidCoupon,
+  getGuitarIdsForUrl
 };

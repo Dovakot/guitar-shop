@@ -62,6 +62,7 @@ function CouponForm(): JSX.Element {
       id="coupon-form"
       method="post"
       onSubmit={handleFormSubmit}
+      data-testid="coupon-form"
     >
       {isLoading && <Spinner />}
 

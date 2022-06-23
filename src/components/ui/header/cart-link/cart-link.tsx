@@ -21,6 +21,7 @@ function CartLink(): JSX.Element {
       aria-label="Корзина"
       activeClassName="link--current"
       to={AppRoute.Cart}
+      data-testid="nav-link-cart"
       exact
     >
       <svg className="header__cart-icon" width={14} height={14} aria-hidden="true">

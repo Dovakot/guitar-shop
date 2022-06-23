@@ -9,6 +9,8 @@ import {
   MAX_REVIEW_COUNT
 } from '../../const';
 
+import {getGuitarIdsForUrl} from '../../utils/cart-utils';
+
 import {
   replaceGuitarPriceParams,
   replaceGuitarReviewParams,
@@ -142,7 +144,7 @@ const sendGuitarReview = (review: GeneratedReview): ThunkActionResult =>
 const fetchOrderData = (): ThunkActionResult =>
   async (dispatch, _getState, api): Promise<void> => {
     const {[NameSpace.Cart]: {orderConfig}} = _getState();
-    const url = Object.keys(orderConfig).join('&id=');
+    const url = getGuitarIdsForUrl(orderConfig);
 
     if (!url) {
       return;

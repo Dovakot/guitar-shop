@@ -21,9 +21,8 @@ const cartData = createSlice({
     },
     addItemToOrder: (state, {payload}) => {
       const {price} = state.preorder.data;
-      const order = addOrder(payload, state.orderConfig[payload], price);
 
-      state.orderConfig[payload] = order;
+      state.orderConfig[payload] = addOrder(payload, state.orderConfig[payload], price);
       state.totalCount += 1;
       state.totalAmount += price;
     },
