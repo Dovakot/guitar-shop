@@ -28,9 +28,11 @@ function Modal({
   const handleElementCloseClick = () => closeModal();
 
   useEffect(() => {
-    if (!isModalHidden) {
-      subscribeEscEvent(closeModal);
+    if (isModalHidden) {
+      return;
     }
+
+    subscribeEscEvent(closeModal);
 
     return () => {
       subscribeEscEvent();

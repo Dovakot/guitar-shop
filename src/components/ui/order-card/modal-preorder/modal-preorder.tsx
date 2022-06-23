@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useParams, useHistory} from 'react-router-dom';
 
@@ -31,7 +31,6 @@ function ModalPreorder(): JSX.Element {
     dispatch(setStateModalPreorder(isHidden));
     dispatch(setUpdateTypeDelete(false));
     dispatch(setInfoModalPreorder({}));
-    setModalType('');
   };
 
   const handleButtonReturnClick = () => {
@@ -63,6 +62,14 @@ function ModalPreorder(): JSX.Element {
         onButtonReturnClick={handleButtonReturnClick}
       />
     );
+
+  useEffect(() => {
+    if (!isModalPreorderHidden) {
+      return;
+    }
+
+    setModalType('');
+  }, [isModalPreorderHidden]);
 
   return (
     <Modal

@@ -8,7 +8,6 @@ import {Guitar} from '../../../../types/guitar-types';
 import {getGuitars} from '../../../../store/reducers/product-data/selectors';
 import {getOrderConfig} from '../../../../store/reducers/cart-data/selectors';
 
-import ModalPreorder from '../../order-card/modal-preorder/modal-preorder';
 import SmallGuitarCard from './small-guitar-card/small-guitar-card';
 
 function GuitarList(): JSX.Element {
@@ -36,8 +35,6 @@ function GuitarList(): JSX.Element {
       data-testid="catalog-cards"
     >
       {isLoading ? MessageText.Loading : getGuitarList()}
-
-      <ModalPreorder />
     </div>
   );
 }
